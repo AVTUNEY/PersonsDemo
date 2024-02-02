@@ -1,9 +1,33 @@
+using Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Persistence;
+using Persistence.Repositories;
+using Service.Abstractions;
+using Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policyBuilder =>
+    {
+        policyBuilder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
+builder.Services.AddScoped<IServiceManager, ServiceManager>();
+builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+var connectionString = builder.Configuration.GetConnectionString("Database");
+    
+// Use AddDbContext for design-time scenarios (like migrations)
+builder.Services.AddDbContext<TbcDemoDbContext>(options => options.UseSqlServer(connectionString));
+
+//builder.Services.AddControllers().AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
 
 var app = builder.Build();
 
@@ -35,6 +59,7 @@ app.MapGet("/weatherforecast", () =>
     })
     .WithName("GetWeatherForecast")
     .WithOpenApi();
+app.UseCors();
 
 app.Run();
 

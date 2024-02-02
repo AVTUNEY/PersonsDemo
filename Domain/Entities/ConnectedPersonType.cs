@@ -3,6 +3,7 @@ namespace Domain.Entities;
 public class ConnectedPersonType
 {
     public int Id { get; set; }
+    public string ConnectionType { get; set; }
     
-    public IEnumerable<PhysicalPerson> PhysicalPersons { get; set; }
+    public ICollection<PhysicalPersonConnectedPersonType> PhysicalPersons { get; set; }
 }

@@ -1,5 +1,1 @@
-﻿namespace Domain;
-
-public class Namespaces
-{
-}
+﻿global using Domain.Entities.Enums;

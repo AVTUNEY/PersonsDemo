@@ -1,6 +1,6 @@
 namespace Domain.Repositories;
 
-public class IPersonRepository
+public interface IPersonRepository
 {
     
 }

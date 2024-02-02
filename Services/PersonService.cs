@@ -1,6 +1,8 @@
+using Service.Abstractions;
+
 namespace Services;
 
-public class PersonService
+public class PersonService : IPersonService
 {
     
 }
