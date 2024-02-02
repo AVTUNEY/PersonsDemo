@@ -4,7 +4,7 @@ services:
   backend:
     build:
       context: "/Users/avtandili/RiderProjects/TBCDemo"
-      dockerfile: "TBCDemo.WebApi/Dockerfile"
+      dockerfile: "src/TBCDemo.WebApi/Dockerfile"
       target: "base"
     command: []
     entrypoint:
@@ -21,13 +21,13 @@ services:
       RESHARPER_LOG_CONF: "/riderLogsConf/backend-log.xml"
     image: "tbc-demo-webapi:dev"
     ports:
-    - "127.0.0.1:57002:57100"
-    - "127.0.0.1:57202:57300"
+    - "127.0.0.1:57021:57100"
+    - "127.0.0.1:57221:57300"
     volumes:
     - "/Users/avtandili/.nuget/packages:/root/.nuget/fallbackpackages"
-    - "/Users/avtandili/RiderProjects/TBCDemo/TBCDemo.WebApi:/app:rw"
+    - "/Users/avtandili/RiderProjects/TBCDemo/src/TBCDemo.WebApi:/app:rw"
     - "/Users/avtandili/RiderProjects/TBCDemo:/src:rw"
     - "/Users/avtandili/.local/share/JetBrains/RiderRemoteDebugger/2023.2.3/LinuxArm64:/riderDebugger"
     - "/Applications/Rider.app/Contents/bin:/riderLogsConf"
-    - "/Users/avtandili/Library/Logs/JetBrains/Rider2023.2/DebuggerWorker/JetBrains.Debugger.Worker.2024_2_02_19_58_34:/riderLogs:rw"
+    - "/Users/avtandili/Library/Logs/JetBrains/Rider2023.2/DebuggerWorker/JetBrains.Debugger.Worker.2024_2_03_02_32_03:/riderLogs:rw"
     working_dir: "/app"

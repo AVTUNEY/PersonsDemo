@@ -1,16 +1,16 @@
-using Domain.Repositories;
-
 namespace Persistence.Repositories;
 
 public class UnitOfWork : IUnitOfWork
 {
+    private readonly TbcDemoDbContext _dbContext;
+
     public UnitOfWork(TbcDemoDbContext dbContext)
     {
-        
+        _dbContext = dbContext;
     }
 
-    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }

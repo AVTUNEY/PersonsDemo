@@ -6,7 +6,7 @@ services:
     container_name: products.api
     build:
       context: .
-      dockerfile: TBCDemo.WebApi/Dockerfile
+      dockerfile: src/TBCDemo.WebApi/Dockerfile
     ports:
       - "443:443"
       - "80:80"
