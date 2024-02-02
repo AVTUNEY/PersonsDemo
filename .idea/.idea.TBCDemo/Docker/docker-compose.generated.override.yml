@@ -1,0 +1,23 @@
+# This is a generated file. Not intended for manual editing.
+version: "3.8"
+services:
+  backend:
+    build:
+      context: "/Users/avtandili/RiderProjects/TBCDemo"
+      dockerfile: "TBCDemo.WebApi/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/TBCDemo.WebApi.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+      NUGET_PACKAGES: "/Users/avtandili/.nuget/packages"
+      NUGET_FALLBACK_PACKAGES: "/Users/avtandili/.nuget/packages"
+    image: "tbc-demo-webapi:dev"
+    ports: []
+    volumes:
+    - "/Users/avtandili/.nuget/packages:/root/.nuget/fallbackpackages"
+    - "/Users/avtandili/RiderProjects/TBCDemo/TBCDemo.WebApi:/app:rw"
+    - "/Users/avtandili/RiderProjects/TBCDemo:/src:rw"
+    working_dir: "/app"

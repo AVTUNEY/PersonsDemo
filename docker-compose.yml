@@ -1,0 +1,6 @@
+﻿services:
+  tbcdemo.webapi:
+    image: tbcdemo.webapi
+    build:
+      context: .
+      dockerfile: TBCDemo.WebApi/Dockerfile
