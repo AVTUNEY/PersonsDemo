@@ -16,7 +16,11 @@ public sealed class PersonRepository : IPersonRepository
 
     public async Task<PhysicalPerson> GetByIdAsync(int personId, CancellationToken cancellationToken = default)
     {
-        var res = await _dbContext.PhysicalPersons.FirstOrDefaultAsync(x => x.Id == personId, cancellationToken);
+        var res = await _dbContext.PhysicalPersons.Include(x=>x.PhoneNumbers)
+                                                                .Include(x=>x.City)
+                                                                .Include(r => r.Relatives)
+                                                                .ThenInclude(rp => rp.RelatedPerson)
+                                                                .FirstOrDefaultAsync(x => x.Id == personId, cancellationToken);
         return res;
     }
 

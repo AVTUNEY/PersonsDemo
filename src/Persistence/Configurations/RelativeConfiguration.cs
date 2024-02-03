@@ -6,8 +6,10 @@ public class RelativeConfiguration : IEntityTypeConfiguration<Relative>
     {
         builder.HasKey(m => m.Id);  
         
+        builder.Property(x => x.Id).ValueGeneratedOnAdd();
+        
         builder.HasOne(bc => bc.Person)
-               .WithMany()
+               .WithMany(r => r.Relatives)
                .HasForeignKey(bc => bc.PersonId)
                .OnDelete(DeleteBehavior.Restrict);  
         

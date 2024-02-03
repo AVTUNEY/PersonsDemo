@@ -14,9 +14,12 @@ public class PhysicalPerson
 
     public DateTime BirthDate { get; set; }
 
+    public int CityId { get; set; }
     public City City { get; set; }
 
     public ICollection<PhoneNumber> PhoneNumbers { get; set; }
     
     public string ImagePath { get; set; }
+    
+    public ICollection<Relative> Relatives { get; set; }
 }

@@ -5,6 +5,8 @@ public class PhoneNumberConfiguration : IEntityTypeConfiguration<PhoneNumber>
     public void Configure(EntityTypeBuilder<PhoneNumber> builder)
     {
         builder.HasKey(pn => pn.Id);
+        
+        builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
         builder.Property(pn => pn.Type).IsRequired();
 

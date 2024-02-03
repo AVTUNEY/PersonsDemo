@@ -14,6 +14,10 @@ public class TbcDemoDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(TbcDemoDbContext).Assembly);
+        modelBuilder.CitySeed();
+        modelBuilder.PhysicalPersonSeed();
+        modelBuilder.RelativeSeed();
+        modelBuilder.PhoneNumbersSeed();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

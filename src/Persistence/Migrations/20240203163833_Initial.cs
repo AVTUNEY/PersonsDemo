@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
@@ -11,6 +13,19 @@ namespace Persistence.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Cities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cities", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "PhysicalPersons",
                 columns: table => new
@@ -22,29 +37,16 @@ namespace Persistence.Migrations
                     Sex = table.Column<int>(type: "int", nullable: false),
                     PersonalNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     BirthDate = table.Column<DateTime>(type: "date", nullable: false),
+                    CityId = table.Column<int>(type: "int", nullable: false),
                     ImagePath = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PhysicalPersons", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Cities",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    PhysicalPersonId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cities", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cities_PhysicalPersons_PhysicalPersonId",
-                        column: x => x.PhysicalPersonId,
-                        principalTable: "PhysicalPersons",
+                        name: "FK_PhysicalPersons_Cities_CityId",
+                        column: x => x.CityId,
+                        principalTable: "Cities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -97,16 +99,50 @@ namespace Persistence.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Cities_PhysicalPersonId",
+            migrationBuilder.InsertData(
                 table: "Cities",
-                column: "PhysicalPersonId",
-                unique: true);
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Tbilisi" },
+                    { 2, "Batumi" },
+                    { 3, "Gori" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PhysicalPersons",
+                columns: new[] { "Id", "BirthDate", "CityId", "FirstName", "ImagePath", "LastName", "PersonalNumber", "Sex" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "John", "john.jpg", "Doe", "123456789", 2 },
+                    { 2, new DateTime(1995, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Alice", "alice.jpg", "Smith", "987654321", 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PhoneNumbers",
+                columns: new[] { "Id", "Number", "PhysicalPersonId", "Type" },
+                values: new object[,]
+                {
+                    { 1, "24324", 1, 3 },
+                    { 2, "123", 1, 1 },
+                    { 3, "54543", 2, 2 },
+                    { 4, "437", 2, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Relatives",
+                columns: new[] { "Id", "PersonId", "RelatedPersonId", "RelationshipType" },
+                values: new object[] { 1, 1, 2, 2 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PhoneNumbers_PhysicalPersonId",
                 table: "PhoneNumbers",
                 column: "PhysicalPersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PhysicalPersons_CityId",
+                table: "PhysicalPersons",
+                column: "CityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Relatives_PersonId",
@@ -123,9 +159,6 @@ namespace Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Cities");
-
-            migrationBuilder.DropTable(
                 name: "PhoneNumbers");
 
             migrationBuilder.DropTable(
@@ -133,6 +166,9 @@ namespace Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "PhysicalPersons");
+
+            migrationBuilder.DropTable(
+                name: "Cities");
         }
     }
 }

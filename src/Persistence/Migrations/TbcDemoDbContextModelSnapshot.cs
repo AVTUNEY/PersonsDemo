@@ -35,15 +35,26 @@ namespace Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("PhysicalPersonId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("PhysicalPersonId")
-                        .IsUnique();
-
                     b.ToTable("Cities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Tbilisi"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Batumi"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Gori"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.PhoneNumber", b =>
@@ -70,6 +81,36 @@ namespace Persistence.Migrations
                     b.HasIndex("PhysicalPersonId");
 
                     b.ToTable("PhoneNumbers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Number = "24324",
+                            PhysicalPersonId = 1,
+                            Type = 3
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Number = "123",
+                            PhysicalPersonId = 1,
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Number = "54543",
+                            PhysicalPersonId = 2,
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Number = "437",
+                            PhysicalPersonId = 2,
+                            Type = 1
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.PhysicalPerson", b =>
@@ -82,6 +123,9 @@ namespace Persistence.Migrations
 
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("date");
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -110,7 +154,33 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CityId");
+
                     b.ToTable("PhysicalPersons");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BirthDate = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CityId = 1,
+                            FirstName = "John",
+                            ImagePath = "john.jpg",
+                            LastName = "Doe",
+                            PersonalNumber = "123456789",
+                            Sex = 2
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BirthDate = new DateTime(1995, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CityId = 2,
+                            FirstName = "Alice",
+                            ImagePath = "alice.jpg",
+                            LastName = "Smith",
+                            PersonalNumber = "987654321",
+                            Sex = 1
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Relative", b =>
@@ -137,17 +207,15 @@ namespace Persistence.Migrations
                     b.HasIndex("RelatedPersonId");
 
                     b.ToTable("Relatives");
-                });
 
-            modelBuilder.Entity("Domain.Entities.City", b =>
-                {
-                    b.HasOne("Domain.Entities.PhysicalPerson", "PhysicalPerson")
-                        .WithOne("City")
-                        .HasForeignKey("Domain.Entities.City", "PhysicalPersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PhysicalPerson");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            PersonId = 1,
+                            RelatedPersonId = 2,
+                            RelationshipType = 2
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.PhoneNumber", b =>
@@ -161,10 +229,21 @@ namespace Persistence.Migrations
                     b.Navigation("PhysicalPerson");
                 });
 
+            modelBuilder.Entity("Domain.Entities.PhysicalPerson", b =>
+                {
+                    b.HasOne("Domain.Entities.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
+                });
+
             modelBuilder.Entity("Domain.Entities.Relative", b =>
                 {
                     b.HasOne("Domain.Entities.PhysicalPerson", "Person")
-                        .WithMany()
+                        .WithMany("Relatives")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -182,10 +261,9 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.PhysicalPerson", b =>
                 {
-                    b.Navigation("City")
-                        .IsRequired();
-
                     b.Navigation("PhoneNumbers");
+
+                    b.Navigation("Relatives");
                 });
 #pragma warning restore 612, 618
         }

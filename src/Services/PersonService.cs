@@ -22,10 +22,10 @@ internal sealed class PersonService : IPersonService
             FirstName = person.FirstName,
             LastName = person.LastName,
             BirthDate = person.BirthDate,
-            //City = person.City.Name,
+            City = person.City.Name,
             Gender = person.Sex.ToString(),
             PersonalNumber = person.PersonalNumber,
-            //PhoneNumbers = person.PhoneNumbers.Select(phone => phone.Number).ToList(),
+            PhoneNumbers = person.PhoneNumbers?.Select(phone => phone.Number).ToList(),
             //ConnectedPersonTypeIds = person.ConnectedPersonTypes.Select(x => x.PhysicalPersonId).ToList()
         };
 

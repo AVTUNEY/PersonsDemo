@@ -6,6 +6,8 @@ public class PhysicalPersonConfiguration : IEntityTypeConfiguration<PhysicalPers
     {
         builder.HasKey(p => p.Id);
 
+        builder.Property(x => x.Id).ValueGeneratedOnAdd();
+
         builder.Property(p => p.FirstName).IsRequired().HasMaxLength(50).IsUnicode();
 
         builder.Property(p => p.LastName).IsRequired().HasMaxLength(50).IsUnicode();
@@ -16,7 +18,7 @@ public class PhysicalPersonConfiguration : IEntityTypeConfiguration<PhysicalPers
 
         builder.Property(p => p.BirthDate).IsRequired().HasColumnType("date");
 
-        builder.HasOne(p => p.City).WithOne(x => x.PhysicalPerson).HasForeignKey<City>(p => p.PhysicalPersonId)
+        builder.HasOne(p => p.City).WithMany().HasForeignKey(p => p.CityId)
             .IsRequired();
 
         builder.HasMany(p => p.PhoneNumbers)

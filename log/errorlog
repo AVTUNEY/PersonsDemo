@@ -141,3 +141,99 @@
 2024-02-03 14:48:28.58 spid65      Starting up database 'TbcDb'.
 2024-02-03 14:48:28.63 spid65      Parallel redo is started for database 'TbcDb' with worker pool size [6].
 2024-02-03 14:48:28.64 spid49s     Parallel redo is shutdown for database 'TbcDb' with worker pool size [6].
+2024-02-03 14:58:10.87 spid53      Setting database option SINGLE_USER to ON for database 'TbcDb'.
+2024-02-03 14:58:10.93 Logon       Error: 18456, Severity: 14, State: 38.
+2024-02-03 14:58:10.93 Logon       Login failed for user 'sa'. Reason: Failed to open the explicitly specified database 'TbcDb'. [CLIENT: 172.19.0.3]
+2024-02-03 14:58:12.21 spid53      [5]. Feature Status: PVS: 0. CTR: 0. ConcurrentPFSUpdate: 1.
+2024-02-03 14:58:12.21 spid53      Starting up database 'TbcDb'.
+2024-02-03 14:58:12.27 spid53      Parallel redo is started for database 'TbcDb' with worker pool size [6].
+2024-02-03 14:58:12.28 spid53      Parallel redo is shutdown for database 'TbcDb' with worker pool size [6].
+2024-02-03 14:58:12.35 spid53      Setting database option READ_COMMITTED_SNAPSHOT to ON for database 'TbcDb'.
+2024-02-03 14:58:12.36 spid53      [5]. Feature Status: PVS: 0. CTR: 0. ConcurrentPFSUpdate: 1.
+2024-02-03 14:58:12.36 spid53      Starting up database 'TbcDb'.
+2024-02-03 14:58:12.42 spid53      Parallel redo is started for database 'TbcDb' with worker pool size [6].
+2024-02-03 14:58:12.44 spid22s     Parallel redo is shutdown for database 'TbcDb' with worker pool size [6].
+2024-02-03 15:03:46.14 spid53      Setting database option SINGLE_USER to ON for database 'TbcDb'.
+2024-02-03 15:03:46.18 Logon       Error: 18456, Severity: 14, State: 38.
+2024-02-03 15:03:46.18 Logon       Login failed for user 'sa'. Reason: Failed to open the explicitly specified database 'TbcDb'. [CLIENT: 172.19.0.3]
+2024-02-03 15:03:46.31 spid53      [5]. Feature Status: PVS: 0. CTR: 0. ConcurrentPFSUpdate: 1.
+2024-02-03 15:03:46.31 spid53      Starting up database 'TbcDb'.
+2024-02-03 15:03:46.36 spid53      Parallel redo is started for database 'TbcDb' with worker pool size [6].
+2024-02-03 15:03:46.37 spid53      Parallel redo is shutdown for database 'TbcDb' with worker pool size [6].
+2024-02-03 15:03:46.40 spid53      Setting database option READ_COMMITTED_SNAPSHOT to ON for database 'TbcDb'.
+2024-02-03 15:03:46.41 spid53      [5]. Feature Status: PVS: 0. CTR: 0. ConcurrentPFSUpdate: 1.
+2024-02-03 15:03:46.41 spid53      Starting up database 'TbcDb'.
+2024-02-03 15:03:46.46 spid53      Parallel redo is started for database 'TbcDb' with worker pool size [6].
+2024-02-03 15:03:46.48 spid34s     Parallel redo is shutdown for database 'TbcDb' with worker pool size [6].
+2024-02-03 15:04:42.63 spid53      Setting database option SINGLE_USER to ON for database 'TbcDb'.
+2024-02-03 15:04:42.67 Logon       Error: 18456, Severity: 14, State: 38.
+2024-02-03 15:04:42.67 Logon       Login failed for user 'sa'. Reason: Failed to open the explicitly specified database 'TbcDb'. [CLIENT: 172.19.0.3]
+2024-02-03 15:04:42.80 spid53      [5]. Feature Status: PVS: 0. CTR: 0. ConcurrentPFSUpdate: 1.
+2024-02-03 15:04:42.80 spid53      Starting up database 'TbcDb'.
+2024-02-03 15:04:42.86 spid53      Parallel redo is started for database 'TbcDb' with worker pool size [6].
+2024-02-03 15:04:42.87 spid53      Parallel redo is shutdown for database 'TbcDb' with worker pool size [6].
+2024-02-03 15:04:42.97 spid53      Setting database option READ_COMMITTED_SNAPSHOT to ON for database 'TbcDb'.
+2024-02-03 15:04:42.98 spid53      [5]. Feature Status: PVS: 0. CTR: 0. ConcurrentPFSUpdate: 1.
+2024-02-03 15:04:42.98 spid53      Starting up database 'TbcDb'.
+2024-02-03 15:04:43.03 spid53      Parallel redo is started for database 'TbcDb' with worker pool size [6].
+2024-02-03 15:04:43.05 spid21s     Parallel redo is shutdown for database 'TbcDb' with worker pool size [6].
+2024-02-03 16:07:16.58 spid53      Setting database option SINGLE_USER to ON for database 'TbcDb'.
+2024-02-03 16:07:19.60 Logon       Error: 18456, Severity: 14, State: 38.
+2024-02-03 16:07:19.60 Logon       Login failed for user 'sa'. Reason: Failed to open the explicitly specified database 'TbcDb'. [CLIENT: 172.19.0.3]
+2024-02-03 16:07:24.11 spid53      [5]. Feature Status: PVS: 0. CTR: 0. ConcurrentPFSUpdate: 1.
+2024-02-03 16:07:24.11 spid53      Starting up database 'TbcDb'.
+2024-02-03 16:07:24.17 spid53      Parallel redo is started for database 'TbcDb' with worker pool size [6].
+2024-02-03 16:07:24.19 spid53      Parallel redo is shutdown for database 'TbcDb' with worker pool size [6].
+2024-02-03 16:07:24.31 spid53      Setting database option READ_COMMITTED_SNAPSHOT to ON for database 'TbcDb'.
+2024-02-03 16:07:24.33 spid53      [5]. Feature Status: PVS: 0. CTR: 0. ConcurrentPFSUpdate: 1.
+2024-02-03 16:07:24.33 spid53      Starting up database 'TbcDb'.
+2024-02-03 16:07:24.38 spid53      Parallel redo is started for database 'TbcDb' with worker pool size [6].
+2024-02-03 16:07:24.40 spid44s     Parallel redo is shutdown for database 'TbcDb' with worker pool size [6].
+2024-02-03 16:30:13.22 spid66      Setting database option SINGLE_USER to ON for database 'TbcDb'.
+2024-02-03 16:30:18.00 Logon       Error: 18456, Severity: 14, State: 38.
+2024-02-03 16:30:18.00 Logon       Login failed for user 'sa'. Reason: Failed to open the explicitly specified database 'TbcDb'. [CLIENT: 172.19.0.3]
+2024-02-03 16:30:20.69 spid66      [5]. Feature Status: PVS: 0. CTR: 0. ConcurrentPFSUpdate: 1.
+2024-02-03 16:30:20.69 spid66      Starting up database 'TbcDb'.
+2024-02-03 16:30:20.74 spid66      Parallel redo is started for database 'TbcDb' with worker pool size [6].
+2024-02-03 16:30:20.75 spid66      Parallel redo is shutdown for database 'TbcDb' with worker pool size [6].
+2024-02-03 16:30:20.83 spid66      Setting database option READ_COMMITTED_SNAPSHOT to ON for database 'TbcDb'.
+2024-02-03 16:30:20.85 spid66      [5]. Feature Status: PVS: 0. CTR: 0. ConcurrentPFSUpdate: 1.
+2024-02-03 16:30:20.85 spid66      Starting up database 'TbcDb'.
+2024-02-03 16:30:20.90 spid66      Parallel redo is started for database 'TbcDb' with worker pool size [6].
+2024-02-03 16:30:20.91 spid38s     Parallel redo is shutdown for database 'TbcDb' with worker pool size [6].
+2024-02-03 16:31:34.38 spid52      Setting database option SINGLE_USER to ON for database 'TbcDb'.
+2024-02-03 16:31:34.43 Logon       Error: 18456, Severity: 14, State: 38.
+2024-02-03 16:31:34.43 Logon       Login failed for user 'sa'. Reason: Failed to open the explicitly specified database 'TbcDb'. [CLIENT: 172.19.0.3]
+2024-02-03 16:31:37.07 spid52      [5]. Feature Status: PVS: 0. CTR: 0. ConcurrentPFSUpdate: 1.
+2024-02-03 16:31:37.07 spid52      Starting up database 'TbcDb'.
+2024-02-03 16:31:37.12 spid52      Parallel redo is started for database 'TbcDb' with worker pool size [6].
+2024-02-03 16:31:37.13 spid52      Parallel redo is shutdown for database 'TbcDb' with worker pool size [6].
+2024-02-03 16:31:37.17 spid52      Setting database option READ_COMMITTED_SNAPSHOT to ON for database 'TbcDb'.
+2024-02-03 16:31:37.19 spid52      [5]. Feature Status: PVS: 0. CTR: 0. ConcurrentPFSUpdate: 1.
+2024-02-03 16:31:37.19 spid52      Starting up database 'TbcDb'.
+2024-02-03 16:31:37.23 spid52      Parallel redo is started for database 'TbcDb' with worker pool size [6].
+2024-02-03 16:31:37.25 spid12s     Parallel redo is shutdown for database 'TbcDb' with worker pool size [6].
+2024-02-03 16:33:02.02 spid60      Setting database option SINGLE_USER to ON for database 'TbcDb'.
+2024-02-03 16:33:02.06 Logon       Error: 18456, Severity: 14, State: 38.
+2024-02-03 16:33:02.06 Logon       Login failed for user 'sa'. Reason: Failed to open the explicitly specified database 'TbcDb'. [CLIENT: 172.19.0.3]
+2024-02-03 16:33:04.06 spid60      [5]. Feature Status: PVS: 0. CTR: 0. ConcurrentPFSUpdate: 1.
+2024-02-03 16:33:04.06 spid60      Starting up database 'TbcDb'.
+2024-02-03 16:33:04.11 spid60      Parallel redo is started for database 'TbcDb' with worker pool size [6].
+2024-02-03 16:33:04.12 spid60      Parallel redo is shutdown for database 'TbcDb' with worker pool size [6].
+2024-02-03 16:33:04.24 spid60      Setting database option READ_COMMITTED_SNAPSHOT to ON for database 'TbcDb'.
+2024-02-03 16:33:04.25 spid60      [5]. Feature Status: PVS: 0. CTR: 0. ConcurrentPFSUpdate: 1.
+2024-02-03 16:33:04.25 spid60      Starting up database 'TbcDb'.
+2024-02-03 16:33:04.30 spid60      Parallel redo is started for database 'TbcDb' with worker pool size [6].
+2024-02-03 16:33:04.31 spid35s     Parallel redo is shutdown for database 'TbcDb' with worker pool size [6].
+2024-02-03 16:39:47.42 spid71      Setting database option SINGLE_USER to ON for database 'TbcDb'.
+2024-02-03 16:39:48.08 Logon       Error: 18456, Severity: 14, State: 38.
+2024-02-03 16:39:48.08 Logon       Login failed for user 'sa'. Reason: Failed to open the explicitly specified database 'TbcDb'. [CLIENT: 172.19.0.3]
+2024-02-03 16:39:51.01 spid71      [5]. Feature Status: PVS: 0. CTR: 0. ConcurrentPFSUpdate: 1.
+2024-02-03 16:39:51.01 spid71      Starting up database 'TbcDb'.
+2024-02-03 16:39:51.06 spid71      Parallel redo is started for database 'TbcDb' with worker pool size [6].
+2024-02-03 16:39:51.07 spid71      Parallel redo is shutdown for database 'TbcDb' with worker pool size [6].
+2024-02-03 16:39:51.11 spid71      Setting database option READ_COMMITTED_SNAPSHOT to ON for database 'TbcDb'.
+2024-02-03 16:39:51.12 spid71      [5]. Feature Status: PVS: 0. CTR: 0. ConcurrentPFSUpdate: 1.
+2024-02-03 16:39:51.12 spid71      Starting up database 'TbcDb'.
+2024-02-03 16:39:51.17 spid71      Parallel redo is started for database 'TbcDb' with worker pool size [6].
+2024-02-03 16:39:51.19 spid49s     Parallel redo is shutdown for database 'TbcDb' with worker pool size [6].

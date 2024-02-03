@@ -31,8 +31,16 @@ services:
       - DB_NAME=TbcDb
       - DB_USER=sa
       - DB_SA_PASSWORD=Admin123
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=80
+      - ASPNETCORE_HTTPS_PORTS=443
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    volumes:
+      - ~/.aspnet/https:/https:ro
     ports:
-      - "8080:80"
+      - "443:443"
+      - "80:80"
 #services:
 #  backend:
 #    image: tbc-demo-webapi:latest  # Use the correct image name
