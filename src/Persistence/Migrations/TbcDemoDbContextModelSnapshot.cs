@@ -46,23 +46,6 @@ namespace Persistence.Migrations
                     b.ToTable("Cities");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ConnectedPersonType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ConnectionType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ConnectedPersonTypes");
-                });
-
             modelBuilder.Entity("Domain.Entities.PhoneNumber", b =>
                 {
                     b.Property<int>("Id")
@@ -130,19 +113,30 @@ namespace Persistence.Migrations
                     b.ToTable("PhysicalPersons");
                 });
 
-            modelBuilder.Entity("Domain.Entities.PhysicalPersonConnectedPersonType", b =>
+            modelBuilder.Entity("Domain.Entities.Relative", b =>
                 {
-                    b.Property<int>("PhysicalPersonId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("ConnectedPersonTypeId")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("PersonId")
                         .HasColumnType("int");
 
-                    b.HasKey("PhysicalPersonId", "ConnectedPersonTypeId");
+                    b.Property<int>("RelatedPersonId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("ConnectedPersonTypeId");
+                    b.Property<int>("RelationshipType")
+                        .HasColumnType("int");
 
-                    b.ToTable("PhysicalPersonConnectedPersonType");
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId");
+
+                    b.HasIndex("RelatedPersonId");
+
+                    b.ToTable("Relatives");
                 });
 
             modelBuilder.Entity("Domain.Entities.City", b =>
@@ -167,36 +161,29 @@ namespace Persistence.Migrations
                     b.Navigation("PhysicalPerson");
                 });
 
-            modelBuilder.Entity("Domain.Entities.PhysicalPersonConnectedPersonType", b =>
+            modelBuilder.Entity("Domain.Entities.Relative", b =>
                 {
-                    b.HasOne("Domain.Entities.ConnectedPersonType", "ConnectedPersonType")
-                        .WithMany("PhysicalPersons")
-                        .HasForeignKey("ConnectedPersonTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("Domain.Entities.PhysicalPerson", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.PhysicalPerson", "PhysicalPerson")
-                        .WithMany("ConnectedPersonTypes")
-                        .HasForeignKey("PhysicalPersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("Domain.Entities.PhysicalPerson", "RelatedPerson")
+                        .WithMany()
+                        .HasForeignKey("RelatedPersonId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("ConnectedPersonType");
+                    b.Navigation("Person");
 
-                    b.Navigation("PhysicalPerson");
-                });
-
-            modelBuilder.Entity("Domain.Entities.ConnectedPersonType", b =>
-                {
-                    b.Navigation("PhysicalPersons");
+                    b.Navigation("RelatedPerson");
                 });
 
             modelBuilder.Entity("Domain.Entities.PhysicalPerson", b =>
                 {
                     b.Navigation("City")
                         .IsRequired();
-
-                    b.Navigation("ConnectedPersonTypes");
 
                     b.Navigation("PhoneNumbers");
                 });

@@ -17,8 +17,6 @@ public class PhysicalPerson
     public City City { get; set; }
 
     public ICollection<PhoneNumber> PhoneNumbers { get; set; }
-
-    public string ImagePath { get; set; }
     
-    public ICollection<PhysicalPersonConnectedPersonType> ConnectedPersonTypes { get; set; }
+    public string ImagePath { get; set; }
 }

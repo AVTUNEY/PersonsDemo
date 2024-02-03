@@ -1,31 +1,64 @@
 ﻿version: '3.8'
 
-services:
+networks:
   backend:
-    image: tbc-demo-webapi:latest  # Use the correct image name
-    container_name: products.api
+
+services:
+  tbcdb:
+    container_name: tbc-db
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Admin123
+    networks:
+      - backend
+    ports:
+      - "18001:1433"
+    volumes:
+      - ./data:/var/opt/mssql/data
+      - ./log:/var/opt/mssql/log
+      - ./secrets:/var/opt/mssql/secrets
+  tbcapi:
+    container_name: tbc-api
+    image: ${DOCKER_REGISTRY-}tbcdemowebapi
     build:
       context: .
       dockerfile: src/TBCDemo.WebApi/Dockerfile
-    ports:
-      - "443:443"
-      - "80:80"
+    networks:
+      - backend
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=80
-      - ASPNETCORE_HTTPS_PORTS=443
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
-    volumes:
-        - ~/.aspnet/https:/https:ro
-    depends_on:
-      - tbc-demo-database  # Update to the correct service name
-
-  tbc-demo-database:
-    image: mcr.microsoft.com/mssql/server:2017-latest
-    environment:
-      - SA_USER=sa
-      - SA_PASSWORD=Pass@word
-      - ACCEPT_EULA=Y
+      - DB_HOST=tbcdb
+      - DB_NAME=TbcDb
+      - DB_USER=sa
+      - DB_SA_PASSWORD=Admin123
     ports:
-      - "1433:1433"
+      - "8080:80"
+#services:
+#  backend:
+#    image: tbc-demo-webapi:latest  # Use the correct image name
+#    container_name: products.api
+#    build:
+#      context: .
+#      dockerfile: src/TBCDemo.WebApi/Dockerfile
+#    ports:
+#      - "443:443"
+#      - "80:80"
+#    environment:
+#      - ASPNETCORE_ENVIRONMENT=Development
+#      - ASPNETCORE_HTTP_PORTS=80
+#      - ASPNETCORE_HTTPS_PORTS=443
+#      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+#      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+#    volumes:
+#        - ~/.aspnet/https:/https:ro
+#    depends_on:
+#      - tbc-demo-database  # Update to the correct service name
+#
+#  tbc-demo-database:
+#    image: mcr.microsoft.com/mssql/server:2017-latest
+#    environment:
+#      - SA_USER=sa
+#      - SA_PASSWORD=Pass@word
+#      - ACCEPT_EULA=Y
+#    ports:
+#      - "1433:1433"

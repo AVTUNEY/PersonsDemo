@@ -1,7 +1,7 @@
 # This is a generated file. Not intended for manual editing.
 version: "3.8"
 services:
-  backend:
+  tbcapi:
     build:
       context: "/Users/avtandili/RiderProjects/TBCDemo"
       dockerfile: "src/TBCDemo.WebApi/Dockerfile"
@@ -14,20 +14,21 @@ services:
     - "--frontend-port=57100"
     - "--backend-port=57300"
     environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
       NUGET_PACKAGES: "/Users/avtandili/.nuget/packages"
       NUGET_FALLBACK_PACKAGES: "/Users/avtandili/.nuget/packages"
       RIDER_DEBUGGER_LOG_DIR: "/riderLogs"
       RESHARPER_LOG_CONF: "/riderLogsConf/backend-log.xml"
-    image: "tbc-demo-webapi:dev"
+    image: "tbcdemowebapi:dev"
     ports:
-    - "127.0.0.1:57021:57100"
-    - "127.0.0.1:57221:57300"
+    - "127.0.0.1:57049:57100"
+    - "127.0.0.1:57249:57300"
     volumes:
     - "/Users/avtandili/.nuget/packages:/root/.nuget/fallbackpackages"
     - "/Users/avtandili/RiderProjects/TBCDemo/src/TBCDemo.WebApi:/app:rw"
     - "/Users/avtandili/RiderProjects/TBCDemo:/src:rw"
     - "/Users/avtandili/.local/share/JetBrains/RiderRemoteDebugger/2023.2.3/LinuxArm64:/riderDebugger"
     - "/Applications/Rider.app/Contents/bin:/riderLogsConf"
-    - "/Users/avtandili/Library/Logs/JetBrains/Rider2023.2/DebuggerWorker/JetBrains.Debugger.Worker.2024_2_03_02_32_03:/riderLogs:rw"
+    - "/Users/avtandili/Library/Logs/JetBrains/Rider2023.2/DebuggerWorker/JetBrains.Debugger.Worker.2024_2_03_18_48_20:/riderLogs:rw"
     working_dir: "/app"

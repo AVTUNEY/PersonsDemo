@@ -24,10 +24,9 @@ builder.Services.AddScoped<IServiceManager, ServiceManager>();
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 //builder.Services.AddScoped<IPersonService, PersonService>();
 //builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-var connectionString = builder.Configuration.GetConnectionString("Database");
-    
-// Use AddDbContext for design-time scenarios (like migrations)
-builder.Services.AddDbContext<TbcDemoDbContext>(options => options.UseSqlServer(connectionString));
+// Use AddDbContext for design-time scenarios (like migrations)\
+var a = ConnectionStringHelper.Get();
+builder.Services.AddDbContext<TbcDemoDbContext>(options => options.UseSqlServer(a));
 
 builder.Services.AddControllers().AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
 
@@ -70,7 +69,32 @@ app.MapGet("/weatherforecast", () =>
     .WithName("GetWeatherForecast")
     .WithOpenApi();
 
-app.Run();
+// using (var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+// {
+//     var serviceProvider = serviceScope.ServiceProvider;
+//     DataSeeder.SeedData(serviceProvider);
+// }
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<TbcDemoDbContext>();
+    db.Database.EnsureDeleted();
+    if (!db.Database.CanConnect())
+    {
+        db.Database.Migrate();
+    }
+}
+
+try
+{
+    app.Run();
+
+}
+catch (Exception e)
+{
+    Console.WriteLine(e);
+    throw;
+}
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
