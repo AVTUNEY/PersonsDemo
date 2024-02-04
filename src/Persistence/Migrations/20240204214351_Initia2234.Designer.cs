@@ -12,7 +12,7 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(TbcDemoDbContext))]
-    [Migration("20240204192612_Initia2234")]
+    [Migration("20240204214351_Initia2234")]
     partial class Initia2234
     {
         /// <inheritdoc />
@@ -57,6 +57,57 @@ namespace Persistence.Migrations
                         {
                             Id = 3,
                             Name = "Gori"
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Entities.PersonConnection", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ConnectedPersonId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ConnectionType")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PersonId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConnectedPersonId");
+
+                    b.HasIndex("PersonId", "ConnectedPersonId")
+                        .IsUnique()
+                        .HasFilter("[PersonId] IS NOT NULL AND [ConnectedPersonId] IS NOT NULL");
+
+                    b.ToTable("PersonConnections");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConnectedPersonId = 2,
+                            ConnectionType = 2,
+                            PersonId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ConnectedPersonId = 4,
+                            ConnectionType = 1,
+                            PersonId = 3
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ConnectedPersonId = 1,
+                            ConnectionType = 3,
+                            PersonId = 3
                         });
                 });
 
@@ -230,54 +281,21 @@ namespace Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Domain.Entities.Relative", b =>
+            modelBuilder.Entity("Domain.Entities.PersonConnection", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.HasOne("Domain.Entities.PhysicalPerson", "ConnectedPerson")
+                        .WithMany()
+                        .HasForeignKey("ConnectedPersonId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.HasOne("Domain.Entities.PhysicalPerson", "Person")
+                        .WithMany("PersonConnections")
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.Property<int>("PersonId")
-                        .HasColumnType("int");
+                    b.Navigation("ConnectedPerson");
 
-                    b.Property<int>("RelatedPersonId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RelationshipType")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RelatedPersonId");
-
-                    b.HasIndex("PersonId", "RelatedPersonId")
-                        .IsUnique();
-
-                    b.ToTable("Relatives");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            PersonId = 1,
-                            RelatedPersonId = 2,
-                            RelationshipType = 2
-                        },
-                        new
-                        {
-                            Id = 2,
-                            PersonId = 3,
-                            RelatedPersonId = 4,
-                            RelationshipType = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            PersonId = 3,
-                            RelatedPersonId = 1,
-                            RelationshipType = 3
-                        });
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("Domain.Entities.PhoneNumber", b =>
@@ -302,32 +320,11 @@ namespace Persistence.Migrations
                     b.Navigation("City");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Relative", b =>
-                {
-                    b.HasOne("Domain.Entities.PhysicalPerson", "Person")
-                        .WithMany("Relatives")
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.PhysicalPerson", "RelatedPerson")
-                        .WithMany("RelatedPersonRelatives")
-                        .HasForeignKey("RelatedPersonId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Person");
-
-                    b.Navigation("RelatedPerson");
-                });
-
             modelBuilder.Entity("Domain.Entities.PhysicalPerson", b =>
                 {
+                    b.Navigation("PersonConnections");
+
                     b.Navigation("PhoneNumbers");
-
-                    b.Navigation("RelatedPersonRelatives");
-
-                    b.Navigation("Relatives");
                 });
 #pragma warning restore 612, 618
         }

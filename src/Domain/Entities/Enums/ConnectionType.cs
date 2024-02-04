@@ -1,6 +1,6 @@
 namespace Domain.Entities.Enums;
 
-public enum RelationshipType
+public enum ConnectionType
 {
     Collegue = 1,
     Friend = 2,

@@ -1,4 +1,4 @@
-namespace Shared.DTOs;
+namespace Shared.DTOs.Persons;
 
 public record PhysicalPersonDto(
     int Id,
@@ -10,5 +10,5 @@ public record PhysicalPersonDto(
     string City,
     string ImagePath,
     ICollection<PhoneNumberDto> PhoneNumbers,
-    ICollection<RelativeDto> Relatives
+    ICollection<PersonConnectionDto> ConnectedPersons
 );

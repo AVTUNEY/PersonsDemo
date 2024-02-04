@@ -16,12 +16,10 @@ public class PhysicalPerson
 
     public int CityId { get; set; }
     public City City { get; set; }
+    
+    public string ImagePath { get; set; }
 
     public ICollection<PhoneNumber> PhoneNumbers { get; set; }
     
-    public string ImagePath { get; set; }
-    
-    public ICollection<Relative> Relatives { get; set; }
-
-    public ICollection<Relative> RelatedPersonRelatives { get; set; }
+    public ICollection<PersonConnection> PersonConnections { get; set; }
 }

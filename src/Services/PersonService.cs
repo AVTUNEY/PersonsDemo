@@ -1,5 +1,3 @@
-using Shared.Pagination;
-
 namespace Services;
 
 internal sealed class PersonService : IPersonService
@@ -11,15 +9,18 @@ internal sealed class PersonService : IPersonService
         _repositoryManager = repositoryManager;
     }
 
-    public async Task<PhysicalPersonDto> CreateAsync(PersonForCreationDto personForCreationDto,
+    public async Task<PhysicalPersonDto> CreateAsync(CreatePersonDto createPersonDto,
         CancellationToken cancellationToken)
     {
-        var person = personForCreationDto.PersonDtoToPerson();
+        var city = await _repositoryManager.CityRepository.GetSingleByCondition(x => x.Id == createPersonDto.CityId,
+            cancellationToken);
+        
+        var person = createPersonDto.PersonDtoToPerson();
 
         _repositoryManager.PersonRepository.Create(person);
         await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
 
-        var createdPersonDto = person.PersonToDto();
+        var createdPersonDto = person.PersonToDto(city.Name);
 
         return createdPersonDto;
     }
@@ -31,7 +32,7 @@ internal sealed class PersonService : IPersonService
             x => x.Id == personId, cancellationToken,
             x => x.City,
             x => x.PhoneNumbers,
-            x => x.Relatives);
+            x => x.PersonConnections);
 
         if (person == null)
         {
@@ -51,14 +52,14 @@ internal sealed class PersonService : IPersonService
             x => x.Id == personId, cancellationToken,
             x => x.City,
             x => x.PhoneNumbers,
-            x => x.Relatives);
+            x => x.PersonConnections);
 
         if (person is null)
         {
             throw new PersonNotFoundException(personId);
         }
 
-        var persons = person.PersonToDto();
+        var persons = person.MapPersonsDto();
 
         return persons;
     }
@@ -67,7 +68,7 @@ internal sealed class PersonService : IPersonService
     {
         var person =
             await _repositoryManager.PersonRepository.GetSingleByCondition(x => x.Id == personId, cancellationToken,
-                x => x.Relatives, x => x.PhoneNumbers);
+                x => x.PersonConnections, x => x.PhoneNumbers);
 
         if (person is null)
         {
@@ -82,19 +83,20 @@ internal sealed class PersonService : IPersonService
     public async Task<PagedResult<PhysicalPersonDto>> SearchAndPaginate(string searchTerm, int pageNumber, int pageSize)
     {
         var searchResult = _repositoryManager.PersonRepository.Search(searchTerm);
-        var physicalPersonDto = searchResult.Select(x => x.PersonToDto());
-        
-        var pagedList = new PagedList<PhysicalPersonDto>(physicalPersonDto, pageSize);
+        var personsDto = searchResult.Select(x => x.MapPersonsDto());
+
+        var pagedList = new PagedList<PhysicalPersonDto>(personsDto, pageSize);
 
         return pagedList.GetPagedResult(pageNumber);
     }
 
-    public async Task<PagedResult<PhysicalPersonDto>> DetailedSearchAndPaginate(string firstName, string lastName, string personalNumber, int pageNumber, int pageSize)
+    public async Task<PagedResult<PhysicalPersonDto>> DetailedSearchAndPaginate(string firstName, string lastName,
+        string personalNumber, int pageNumber, int pageSize)
     {
         var searchResult = _repositoryManager.PersonRepository.DetailedSearch(firstName, lastName, personalNumber);
-        var physicalPersonDto = searchResult.Select(x => x.PersonToDto());
+        var personsDto = searchResult.Select(x => x.MapPersonsDto());
 
-        var pagedList = new PagedList<PhysicalPersonDto>(physicalPersonDto, pageSize);
+        var pagedList = new PagedList<PhysicalPersonDto>(personsDto, pageSize);
 
         return pagedList.GetPagedResult(pageNumber);
     }

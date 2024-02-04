@@ -38,9 +38,9 @@ public class PersonController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreatePerson([FromBody] PersonForCreationDto personForCreationDto)
+    public async Task<IActionResult> CreatePerson([FromBody] CreatePersonDto createPersonDto)
     {
-        var createdPersonDto = await _serviceManager.PersonService.CreateAsync(personForCreationDto);
+        var createdPersonDto = await _serviceManager.PersonService.CreateAsync(createPersonDto);
         
         return CreatedAtAction(nameof(GetPersonById), new { personId = createdPersonDto.Id }, createdPersonDto);
     }

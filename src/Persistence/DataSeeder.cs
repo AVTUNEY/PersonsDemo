@@ -42,7 +42,6 @@ public static class DataSeeder
                     BirthDate = new DateTime(1990, 1, 1),
                     ImagePath = "john.jpg",
                     CityId = 1,
-
                 },
                 new PhysicalPerson
                 {
@@ -137,31 +136,31 @@ public static class DataSeeder
         });
     }
 
-    public static void RelativeSeed(this ModelBuilder modelBuilder)
+    public static void PersonConnectionsSeed(this ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Relative>()
-            .HasData(new List<Relative>()
+        modelBuilder.Entity<PersonConnection>()
+            .HasData(new List<PersonConnection>()
             {
-                new Relative()
+                new PersonConnection()
                 {
                     Id = 1,
                     PersonId = 1,
-                    RelatedPersonId = 2,
-                    RelationshipType = RelationshipType.Friend
+                    ConnectedPersonId = 2,
+                    ConnectionType = ConnectionType.Friend
                 },
-                new Relative()
+                new PersonConnection()
                 {
                     Id = 2,
                     PersonId = 3,
-                    RelatedPersonId = 4,
-                    RelationshipType = RelationshipType.Collegue
+                    ConnectedPersonId = 4,
+                    ConnectionType = ConnectionType.Collegue
                 },
-                new Relative()
+                new PersonConnection()
                 {
                     Id = 3,
                     PersonId = 3,
-                    RelatedPersonId = 1,
-                    RelationshipType = RelationshipType.Relative
+                    ConnectedPersonId = 1,
+                    ConnectionType = ConnectionType.Relative
                 },
             });
     }

@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+
 namespace Persistence.Configurations;
 
 public class PhysicalPersonConfiguration : IEntityTypeConfiguration<PhysicalPerson>
@@ -16,15 +18,32 @@ public class PhysicalPersonConfiguration : IEntityTypeConfiguration<PhysicalPers
 
         builder.Property(p => p.PersonalNumber).IsRequired().HasMaxLength(11);
 
-        builder.Property(p => p.BirthDate).IsRequired().HasColumnType("date");
+        builder.Property(p => p.BirthDate)
+            .IsRequired()
+            .HasColumnType("date")
+            .HasConversion(new ValueConverter<DateTime, DateTime>(
+                v => v,
+                v => ValidateBirthDate(v)));
 
-        builder.HasOne(p => p.City).WithMany().HasForeignKey(p => p.CityId)
+        builder.Property(p => p.ImagePath).HasMaxLength(255);
+
+        builder.HasOne(p => p.City)
+            .WithMany()
+            .HasForeignKey(p => p.CityId)
             .IsRequired();
 
         builder.HasMany(p => p.PhoneNumbers)
             .WithOne(pn => pn.PhysicalPerson)
             .HasForeignKey(pn => pn.PhysicalPersonId);
+    }
 
-        builder.Property(p => p.ImagePath).HasMaxLength(255);
+    private DateTime ValidateBirthDate(DateTime birthDate)
+    {
+        if (birthDate > DateTime.Now.AddYears(-18))
+        {
+            throw new ArgumentOutOfRangeException("BirthDate must be more than 18 years ago.");
+        }
+
+        return birthDate;
     }
 }

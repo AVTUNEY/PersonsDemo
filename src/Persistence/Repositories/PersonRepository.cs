@@ -15,8 +15,8 @@ public sealed class PersonRepository : RepositoryBase<PhysicalPerson>, IPersonRe
     {
         var result = await _dbContext.PhysicalPersons.Include(x => x.PhoneNumbers)
             .Include(x => x.City)
-            .Include(r => r.Relatives)
-            .ThenInclude(rp => rp.RelatedPerson)
+            .Include(r => r.PersonConnections)
+            // .ThenInclude(rp => rp.RelatedPerson)
             .FirstOrDefaultAsync(x => x.Id == personId, cancellationToken);
 
         return result;
@@ -26,7 +26,7 @@ public sealed class PersonRepository : RepositoryBase<PhysicalPerson>, IPersonRe
     {
         var result = _dbContext.PhysicalPersons
             .Include(x => x.PhoneNumbers)
-            .Include(x => x.Relatives)
+            .Include(x => x.PersonConnections)
             .Include(x => x.City).Where(p =>
             p.FirstName.Contains(searchTerm) ||
             p.LastName.Contains(searchTerm) ||
@@ -40,7 +40,7 @@ public sealed class PersonRepository : RepositoryBase<PhysicalPerson>, IPersonRe
         string personalNumber = null)
     {
         var result = _dbContext.PhysicalPersons.Include(x => x.PhoneNumbers)
-            .Include(x => x.Relatives)
+            .Include(x => x.PersonConnections)
             .Include(x => x.City)
             .Where(p =>
                 (firstName == null || p.FirstName == firstName) &&

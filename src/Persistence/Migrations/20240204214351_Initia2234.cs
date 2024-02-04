@@ -52,6 +52,33 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PersonConnections",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PersonId = table.Column<int>(type: "int", nullable: true),
+                    ConnectedPersonId = table.Column<int>(type: "int", nullable: true),
+                    ConnectionType = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PersonConnections", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PersonConnections_PhysicalPersons_ConnectedPersonId",
+                        column: x => x.ConnectedPersonId,
+                        principalTable: "PhysicalPersons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PersonConnections_PhysicalPersons_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "PhysicalPersons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PhoneNumbers",
                 columns: table => new
                 {
@@ -70,33 +97,6 @@ namespace Persistence.Migrations
                         principalTable: "PhysicalPersons",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Relatives",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PersonId = table.Column<int>(type: "int", nullable: false),
-                    RelatedPersonId = table.Column<int>(type: "int", nullable: false),
-                    RelationshipType = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Relatives", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Relatives_PhysicalPersons_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "PhysicalPersons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Relatives_PhysicalPersons_RelatedPersonId",
-                        column: x => x.RelatedPersonId,
-                        principalTable: "PhysicalPersons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -123,6 +123,16 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "PersonConnections",
+                columns: new[] { "Id", "ConnectedPersonId", "ConnectionType", "PersonId" },
+                values: new object[,]
+                {
+                    { 1, 2, 2, 1 },
+                    { 2, 4, 1, 3 },
+                    { 3, 1, 3, 3 }
+                });
+
+            migrationBuilder.InsertData(
                 table: "PhoneNumbers",
                 columns: new[] { "Id", "Number", "PhysicalPersonId", "Type" },
                 values: new object[,]
@@ -133,15 +143,17 @@ namespace Persistence.Migrations
                     { 4, "437", 2, 1 }
                 });
 
-            migrationBuilder.InsertData(
-                table: "Relatives",
-                columns: new[] { "Id", "PersonId", "RelatedPersonId", "RelationshipType" },
-                values: new object[,]
-                {
-                    { 1, 1, 2, 2 },
-                    { 2, 3, 4, 1 },
-                    { 3, 3, 1, 3 }
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_PersonConnections_ConnectedPersonId",
+                table: "PersonConnections",
+                column: "ConnectedPersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersonConnections_PersonId_ConnectedPersonId",
+                table: "PersonConnections",
+                columns: new[] { "PersonId", "ConnectedPersonId" },
+                unique: true,
+                filter: "[PersonId] IS NOT NULL AND [ConnectedPersonId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PhoneNumbers_PhysicalPersonId",
@@ -152,27 +164,16 @@ namespace Persistence.Migrations
                 name: "IX_PhysicalPersons_CityId",
                 table: "PhysicalPersons",
                 column: "CityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Relatives_PersonId_RelatedPersonId",
-                table: "Relatives",
-                columns: new[] { "PersonId", "RelatedPersonId" },
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Relatives_RelatedPersonId",
-                table: "Relatives",
-                column: "RelatedPersonId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PhoneNumbers");
+                name: "PersonConnections");
 
             migrationBuilder.DropTable(
-                name: "Relatives");
+                name: "PhoneNumbers");
 
             migrationBuilder.DropTable(
                 name: "PhysicalPersons");

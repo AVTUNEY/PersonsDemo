@@ -2,31 +2,48 @@ namespace Shared.Mappings;
 
 public static class PersonMappingExtensions
 {
-    public static PhysicalPerson PersonDtoToPerson(this PersonForCreationDto personForCreationDto)
+    public static PhysicalPerson PersonDtoToPerson(this CreatePersonDto createPersonDto)
     {
         return new PhysicalPerson
         {
-            FirstName = personForCreationDto.FirstName,
-            LastName = personForCreationDto.LastName,
-            Gender = personForCreationDto.Gender,
-            PersonalNumber = personForCreationDto.PersonalNumber,
-            BirthDate = personForCreationDto.BirthDate,
-            CityId = personForCreationDto.CityId,
-            ImagePath = personForCreationDto.ImagePath,
-            PhoneNumbers = personForCreationDto.PhoneNumbers.Select(phone => new PhoneNumber
+            FirstName = createPersonDto.FirstName,
+            LastName = createPersonDto.LastName,
+            Gender = createPersonDto.Gender,
+            PersonalNumber = createPersonDto.PersonalNumber,
+            BirthDate = createPersonDto.BirthDate,
+            CityId = createPersonDto.CityId,
+            ImagePath = createPersonDto.ImagePath,
+            PhoneNumbers = createPersonDto.PhoneNumbers.Select(x => new PhoneNumber
             {
-                Number = phone.PhoneNumber,
-                Type = phone.Type
+                Number = x.PhoneNumber,
+                Type = x.Type
             }).ToList(),
-            Relatives = personForCreationDto.Relatives.Select(relative => new Relative
+            PersonConnections = createPersonDto.ConnectedPersons.Select(x => new PersonConnection
             {
-                RelatedPersonId = relative.RelatedPersonId,
-                RelationshipType = relative.RelationshipType
+                ConnectedPersonId = x.ConnectedPersonId,
+                ConnectionType = x.ConnectionType
             }).ToList()
         };
     }
 
-    public static PhysicalPersonDto PersonToDto(this PhysicalPerson person)
+    public static PhysicalPersonDto PersonToDto(this PhysicalPerson person, string city)
+    {
+        return new PhysicalPersonDto(
+            Id: person.Id,
+            FirstName: person.FirstName,
+            LastName: person.LastName,
+            BirthDate: person.BirthDate,
+            City: city,
+            Gender: person.Gender.ToString(),
+            PersonalNumber: person.PersonalNumber,
+            PhoneNumbers: person.PhoneNumbers.Select(x => new PhoneNumberDto(x.Number, x.Type)).ToList(),
+            ImagePath: person.ImagePath,
+            ConnectedPersons: person.PersonConnections
+                .Select(x => new PersonConnectionDto(x.ConnectedPersonId, x.ConnectionType)).ToList()
+        );
+    }
+    
+    public static PhysicalPersonDto MapPersonsDto (this PhysicalPerson person)
     {
         return new PhysicalPersonDto(
             Id: person.Id,
@@ -36,12 +53,13 @@ public static class PersonMappingExtensions
             City: person.City.Name,
             Gender: person.Gender.ToString(),
             PersonalNumber: person.PersonalNumber,
-            PhoneNumbers: person.PhoneNumbers.Select(phone => new PhoneNumberDto(phone.Number, phone.Type)).ToList(),
+            PhoneNumbers: person.PhoneNumbers.Select(x => new PhoneNumberDto(x.Number, x.Type)).ToList(),
             ImagePath: person.ImagePath,
-            Relatives: person.Relatives.Select(relative => new RelativeDto(relative.RelatedPersonId, relative.RelationshipType)).ToList()
+            ConnectedPersons: person.PersonConnections
+                .Select(x => new PersonConnectionDto(x.ConnectedPersonId, x.ConnectionType)).ToList()
         );
     }
-    
+
     public static void UpdateFromDto(this PhysicalPerson person, PersonForUpdateDto updatedPersonDto)
     {
         if (person == null || updatedPersonDto == null)
