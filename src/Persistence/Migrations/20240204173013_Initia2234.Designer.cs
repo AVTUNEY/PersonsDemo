@@ -12,7 +12,7 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(TbcDemoDbContext))]
-    [Migration("20240204152814_Initia2234")]
+    [Migration("20240204173013_Initia2234")]
     partial class Initia2234
     {
         /// <inheritdoc />
@@ -289,7 +289,7 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.PhysicalPerson", "RelatedPerson")
-                        .WithMany()
+                        .WithMany("RelatedPersonRelatives")
                         .HasForeignKey("RelatedPersonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -302,6 +302,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.PhysicalPerson", b =>
                 {
                     b.Navigation("PhoneNumbers");
+
+                    b.Navigation("RelatedPersonRelatives");
 
                     b.Navigation("Relatives");
                 });

@@ -22,4 +22,6 @@ public class PhysicalPerson
     public string ImagePath { get; set; }
     
     public ICollection<Relative> Relatives { get; set; }
+
+    public ICollection<Relative> RelatedPersonRelatives { get; set; }
 }

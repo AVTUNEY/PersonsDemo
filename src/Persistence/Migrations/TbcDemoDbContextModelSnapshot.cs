@@ -286,7 +286,7 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.PhysicalPerson", "RelatedPerson")
-                        .WithMany()
+                        .WithMany("RelatedPersonRelatives")
                         .HasForeignKey("RelatedPersonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -299,6 +299,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.PhysicalPerson", b =>
                 {
                     b.Navigation("PhoneNumbers");
+
+                    b.Navigation("RelatedPersonRelatives");
 
                     b.Navigation("Relatives");
                 });

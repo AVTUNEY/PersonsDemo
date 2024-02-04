@@ -8,15 +8,17 @@ public class RelativeConfiguration : IEntityTypeConfiguration<Relative>
         
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
         
-        builder.HasOne(bc => bc.Person)
-               .WithMany(r => r.Relatives)
-               .HasForeignKey(bc => bc.PersonId)
-               .OnDelete(DeleteBehavior.Cascade);  
-        
-        builder.HasOne(bc => bc.RelatedPerson)
-            .WithMany()
-            .HasForeignKey(bc => bc.RelatedPersonId)
-            .OnDelete(DeleteBehavior.Restrict); 
+       builder
+            .HasOne(r => r.Person)
+            .WithMany(p => p.Relatives)
+            .HasForeignKey(r => r.PersonId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder
+            .HasOne(r => r.RelatedPerson)
+            .WithMany(p => p.RelatedPersonRelatives)
+            .HasForeignKey(r => r.RelatedPersonId)
+            .OnDelete(DeleteBehavior.Restrict);
         
         builder.HasIndex(bc => new { bc.PersonId, bc.RelatedPersonId }).IsUnique();
     }
