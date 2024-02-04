@@ -7,3 +7,4 @@ data/
 log/
 secrets/
 .idea/
+src/.idea
