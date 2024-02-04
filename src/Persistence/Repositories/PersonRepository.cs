@@ -16,7 +16,6 @@ public sealed class PersonRepository : RepositoryBase<PhysicalPerson>, IPersonRe
         var result = await _dbContext.PhysicalPersons.Include(x => x.PhoneNumbers)
             .Include(x => x.City)
             .Include(r => r.PersonConnections)
-            // .ThenInclude(rp => rp.RelatedPerson)
             .FirstOrDefaultAsync(x => x.Id == personId, cancellationToken);
 
         return result;
@@ -28,10 +27,10 @@ public sealed class PersonRepository : RepositoryBase<PhysicalPerson>, IPersonRe
             .Include(x => x.PhoneNumbers)
             .Include(x => x.PersonConnections)
             .Include(x => x.City).Where(p =>
-            p.FirstName.Contains(searchTerm) ||
-            p.LastName.Contains(searchTerm) ||
-            p.PersonalNumber.Contains(searchTerm)
-        ).ToList();
+                p.FirstName.Contains(searchTerm) ||
+                p.LastName.Contains(searchTerm) ||
+                p.PersonalNumber.Contains(searchTerm)
+            ).ToList();
 
         return result;
     }
@@ -49,5 +48,18 @@ public sealed class PersonRepository : RepositoryBase<PhysicalPerson>, IPersonRe
             );
 
         return result;
+    }
+
+    public IEnumerable<PhysicalPerson> GetConnectedPersonsByType(int targetPersonId,
+        ConnectionType connectionType)
+    {
+        var connectedPersonsQuery = _dbContext.PersonConnections
+            .Where(r => (r.PersonId == targetPersonId || r.ConnectedPersonId == targetPersonId) &&
+                        r.ConnectionType == connectionType)
+            .Select(r => r.PersonId == targetPersonId ? r.ConnectedPerson : r.Person);
+
+        var connectedPersonsList = connectedPersonsQuery.ToList();
+
+        return connectedPersonsList;
     }
 }

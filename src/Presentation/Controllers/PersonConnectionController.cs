@@ -14,9 +14,9 @@ public class PersonConnectionController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreatePersonConnection([FromBody] CreatePersonConnectionDto relativeForCreation)
+    public async Task<IActionResult> CreatePersonConnection([FromBody] CreatePersonConnectionDto createConnection)
     {
-        var dto = await _serviceManager.PersonConnectionService.CreateAsync(relativeForCreation);
+        var dto = await _serviceManager.PersonConnectionService.CreateAsync(createConnection);
 
         return Ok(dto);
     }

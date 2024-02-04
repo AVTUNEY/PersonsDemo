@@ -1,3 +1,5 @@
+using Domain.Entities.Enums;
+
 namespace Services;
 
 internal sealed class PersonService : IPersonService
@@ -14,7 +16,7 @@ internal sealed class PersonService : IPersonService
     {
         var city = await _repositoryManager.CityRepository.GetSingleByCondition(x => x.Id == createPersonDto.CityId,
             cancellationToken);
-        
+
         var person = createPersonDto.PersonDtoToPerson();
 
         _repositoryManager.PersonRepository.Create(person);
@@ -99,5 +101,30 @@ internal sealed class PersonService : IPersonService
         var pagedList = new PagedList<PhysicalPersonDto>(personsDto, pageSize);
 
         return pagedList.GetPagedResult(pageNumber);
+    }
+
+    public ConnectedPersonsResultDto GetConnectionReport(int targetPersonId,
+        ConnectionType connectionType)
+    {
+        var persons =
+            _repositoryManager.PersonRepository.GetConnectedPersonsByType(targetPersonId, connectionType);
+
+        var connectedPersonsList = persons
+            .Select(p => new ConnectedPersonDto
+            {
+                Id = p.Id,
+                FirstName = p.FirstName,
+                LastName = p.LastName
+            })
+            .ToList();
+
+        var resultDto = new ConnectedPersonsResultDto
+        {
+            Count = connectedPersonsList.Count,
+            ConnectionType = connectionType,
+            ConnectedPersons = connectedPersonsList
+        };
+
+        return resultDto;
     }
 }
