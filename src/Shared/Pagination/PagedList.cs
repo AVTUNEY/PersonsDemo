@@ -2,7 +2,6 @@ namespace Shared.Pagination;
 public class PagedList<T>
 {
     private readonly List<T> _sourceList;
-    private readonly int _pageSize;
 
     public PagedList(IEnumerable<T> sourceList, int pageSize)
     {
@@ -12,12 +11,12 @@ public class PagedList<T>
         }
 
         _sourceList = sourceList.ToList() ?? throw new ArgumentNullException(nameof(sourceList));
-        _pageSize = pageSize;
+        PageSize = pageSize;
     }
 
-    private int TotalPages => (int)Math.Ceiling((double)_sourceList.Count / _pageSize);
+    private int TotalPages => (int)Math.Ceiling((double)_sourceList.Count / PageSize);
 
-    private int PageSize => _pageSize;
+    private int PageSize { get; }
 
     private int TotalItems => _sourceList.Count;
 
@@ -28,8 +27,8 @@ public class PagedList<T>
             throw new ArgumentOutOfRangeException(nameof(pageNumber), "Invalid page number.");
         }
 
-        var startIndex = (pageNumber - 1) * _pageSize;
-        var pageData = _sourceList.Skip(startIndex).Take(_pageSize).ToList();
+        var startIndex = (pageNumber - 1) * PageSize;
+        var pageData = _sourceList.Skip(startIndex).Take(PageSize).ToList();
 
         return new PagedResult<T>
         {
