@@ -117,7 +117,9 @@ namespace Persistence.Migrations
                     { 1, new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "John", 2, "john.jpg", "Doe", "123456789" },
                     { 2, new DateTime(1995, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Alice", 1, "alice.jpg", "Smith", "987654321" },
                     { 3, new DateTime(1985, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Bob", 2, "bob.jpg", "Johnson", "555555555" },
-                    { 4, new DateTime(1980, 12, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Eva", 1, "eva.jpg", "Brown", "111111111" }
+                    { 4, new DateTime(1980, 12, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Eva", 1, "eva.jpg", "Brown", "111111111" },
+                    { 5, new DateTime(1992, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "John", 2, "john_smith.jpg", "Smith", "555123123" },
+                    { 6, new DateTime(1987, 7, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "John", 2, "john_williams.jpg", "Williams", "999888777" }
                 });
 
             migrationBuilder.InsertData(

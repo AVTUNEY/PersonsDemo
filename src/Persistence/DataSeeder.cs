@@ -77,6 +77,28 @@ public static class DataSeeder
                     ImagePath = "eva.jpg",
                     CityId = 1
                 },
+                new PhysicalPerson
+                {
+                    Id = 5,
+                    FirstName = "John",
+                    LastName = "Smith",
+                    Gender = Gender.Male,
+                    PersonalNumber = "555123123",
+                    BirthDate = new DateTime(1992, 3, 20),
+                    ImagePath = "john_smith.jpg",
+                    CityId = 2
+                },
+                new PhysicalPerson
+                {
+                    Id = 6,
+                    FirstName = "John",
+                    LastName = "Williams",
+                    Gender = Gender.Male,
+                    PersonalNumber = "999888777",
+                    BirthDate = new DateTime(1987, 7, 8),
+                    ImagePath = "john_williams.jpg",
+                    CityId = 3
+                },
             });
     }
 

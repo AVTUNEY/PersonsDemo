@@ -12,7 +12,7 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(TbcDemoDbContext))]
-    [Migration("20240204173013_Initia2234")]
+    [Migration("20240204192612_Initia2234")]
     partial class Initia2234
     {
         /// <inheritdoc />
@@ -205,6 +205,28 @@ namespace Persistence.Migrations
                             ImagePath = "eva.jpg",
                             LastName = "Brown",
                             PersonalNumber = "111111111"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            BirthDate = new DateTime(1992, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CityId = 2,
+                            FirstName = "John",
+                            Gender = 2,
+                            ImagePath = "john_smith.jpg",
+                            LastName = "Smith",
+                            PersonalNumber = "555123123"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            BirthDate = new DateTime(1987, 7, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CityId = 3,
+                            FirstName = "John",
+                            Gender = 2,
+                            ImagePath = "john_williams.jpg",
+                            LastName = "Williams",
+                            PersonalNumber = "999888777"
                         });
                 });
 

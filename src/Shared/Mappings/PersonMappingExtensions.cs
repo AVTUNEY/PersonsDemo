@@ -37,7 +37,7 @@ public static class PersonMappingExtensions
             City = person.City?.Name,
             Gender = person.Gender.ToString(),
             PersonalNumber = person.PersonalNumber,
-            PhoneNumbers = person.PhoneNumbers?.Select(phone => new PhoneNumberDto
+            PhoneNumbers = person.PhoneNumbers.Select(phone => new PhoneNumberDto
             {
                 PhoneNumber = phone.Number,
                 Type = phone.Type

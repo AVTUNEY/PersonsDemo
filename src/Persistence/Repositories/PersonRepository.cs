@@ -13,32 +13,41 @@ public sealed class PersonRepository : RepositoryBase<PhysicalPerson>, IPersonRe
 
     public async Task<PhysicalPerson> GetByIdAsync(int personId, CancellationToken cancellationToken = default)
     {
-        var res = await _dbContext.PhysicalPersons.Include(x=>x.PhoneNumbers)
-                                                                .Include(x=>x.City)
-                                                                .Include(r => r.Relatives)
-                                                                .ThenInclude(rp => rp.RelatedPerson)
-                                                                .FirstOrDefaultAsync(x => x.Id == personId, cancellationToken);
-        return res;
+        var result = await _dbContext.PhysicalPersons.Include(x => x.PhoneNumbers)
+            .Include(x => x.City)
+            .Include(r => r.Relatives)
+            .ThenInclude(rp => rp.RelatedPerson)
+            .FirstOrDefaultAsync(x => x.Id == personId, cancellationToken);
+
+        return result;
     }
 
-    public async Task<IEnumerable<PhysicalPerson>> GetPagedAsync(
-        int page, 
-        int pageSize,
-        string searchTerm,
-        CancellationToken cancellationToken = default)
+    public IEnumerable<PhysicalPerson> Search(string searchTerm)
     {
-        var query = _dbContext.PhysicalPersons.AsQueryable();
+        var result = _dbContext.PhysicalPersons
+            .Include(x => x.PhoneNumbers)
+            .Include(x => x.Relatives)
+            .Include(x => x.City).Where(p =>
+            p.FirstName.Contains(searchTerm) ||
+            p.LastName.Contains(searchTerm) ||
+            p.PersonalNumber.Contains(searchTerm)
+        ).ToList();
 
-        if (!string.IsNullOrEmpty(searchTerm))
-        {
-            query = query.Where(person =>
-                EF.Functions.Like(person.FirstName, $"%{searchTerm}%") ||
-                EF.Functions.Like(person.LastName, $"%{searchTerm}%") ||
-                EF.Functions.Like(person.PersonalNumber, $"%{searchTerm}%"));
-        }
+        return result;
+    }
 
-        return await query.Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync(cancellationToken);
+    public IEnumerable<PhysicalPerson> DetailedSearch(string firstName = null, string lastName = null,
+        string personalNumber = null)
+    {
+        var result = _dbContext.PhysicalPersons.Include(x => x.PhoneNumbers)
+            .Include(x => x.Relatives)
+            .Include(x => x.City)
+            .Where(p =>
+                (firstName == null || p.FirstName == firstName) &&
+                (lastName == null || p.LastName == lastName) &&
+                (personalNumber == null || p.PersonalNumber == personalNumber)
+            );
+
+        return result;
     }
 }

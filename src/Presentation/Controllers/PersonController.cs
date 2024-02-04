@@ -20,6 +20,22 @@ public class PersonController : ControllerBase
         
         return Ok(person);
     }
+    
+    [HttpGet("search")]
+    public async Task<IActionResult> QuickSearch(string searchTerm, int pageNumber = 1, int pageSize = 10)
+    {
+        var searchResults = await _serviceManager.PersonService.SearchAndPaginate(searchTerm, pageNumber, pageSize);
+        
+        return Ok(searchResults);
+    }
+    
+    [HttpGet("detailedSearch")]
+    public async Task<IActionResult> DetailedSearch(string firstName, string lastName, string personalNumber, int pageNumber = 1, int pageSize = 10)
+    {
+        var detailedSearchResults = await _serviceManager.PersonService.DetailedSearchAndPaginate(firstName, lastName, personalNumber, pageNumber, pageSize);
+        
+        return Ok(detailedSearchResults);
+    }
 
     [HttpPost]
     public async Task<IActionResult> CreatePerson([FromBody] PersonForCreationDto personForCreationDto)

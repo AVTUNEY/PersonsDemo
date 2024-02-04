@@ -1,3 +1,5 @@
+using Shared.Pagination;
+
 namespace Services;
 
 internal sealed class PersonService : IPersonService
@@ -75,5 +77,25 @@ internal sealed class PersonService : IPersonService
         _repositoryManager.PersonRepository.Delete(person);
 
         await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<PagedResult<PhysicalPersonDto>> SearchAndPaginate(string searchTerm, int pageNumber, int pageSize)
+    {
+        var searchResult = _repositoryManager.PersonRepository.Search(searchTerm);
+        var physicalPersonDto = searchResult.Select(x => x.PersonToDto());
+        
+        var pagedList = new PagedList<PhysicalPersonDto>(physicalPersonDto, pageSize);
+
+        return pagedList.GetPagedResult(pageNumber);
+    }
+
+    public async Task<PagedResult<PhysicalPersonDto>> DetailedSearchAndPaginate(string firstName, string lastName, string personalNumber, int pageNumber, int pageSize)
+    {
+        var searchResult = _repositoryManager.PersonRepository.DetailedSearch(firstName, lastName, personalNumber);
+        var physicalPersonDto = searchResult.Select(x => x.PersonToDto());
+
+        var pagedList = new PagedList<PhysicalPersonDto>(physicalPersonDto, pageSize);
+
+        return pagedList.GetPagedResult(pageNumber);
     }
 }
