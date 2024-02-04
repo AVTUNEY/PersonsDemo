@@ -1,5 +1,3 @@
-using Domain.Entities;
-
 namespace Services;
 
 public class RelativeService : IRelativeService
@@ -25,12 +23,8 @@ public class RelativeService : IRelativeService
 
         await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
 
-        var createdRelation = new RelativeDto()
-        {
-            RelatedPersonId = relative.RelatedPersonId,
-            RelationshipType = relative.RelationshipType
-        };
-
+        var createdRelation = new RelativeDto(relative.RelatedPersonId, relative.RelationshipType);
+        
         return createdRelation;
     }
 
