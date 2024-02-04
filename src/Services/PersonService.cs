@@ -55,9 +55,25 @@ internal sealed class PersonService : IPersonService
         {
             throw new PersonNotFoundException(personId);
         }
-        
+
         var persons = person.PersonToDto();
 
         return persons;
+    }
+
+    public async Task DeleteAsync(int personId, CancellationToken cancellationToken)
+    {
+        var person =
+            await _repositoryManager.PersonRepository.GetSingleByCondition(x => x.Id == personId, cancellationToken,
+                x => x.Relatives, x => x.PhoneNumbers);
+
+        if (person is null)
+        {
+            throw new PersonNotFoundException(personId);
+        }
+
+        _repositoryManager.PersonRepository.Delete(person);
+
+        await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

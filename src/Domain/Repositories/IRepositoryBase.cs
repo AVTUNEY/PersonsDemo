@@ -1,5 +1,3 @@
-using System.Linq.Expressions;
-
 namespace Domain.Repositories;
 
 public interface IRepositoryBase<T>

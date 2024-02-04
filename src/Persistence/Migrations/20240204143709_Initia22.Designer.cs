@@ -12,8 +12,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(TbcDemoDbContext))]
-    [Migration("20240204113429_Initial")]
-    partial class Initial
+    [Migration("20240204143709_Initia22")]
+    partial class Initia22
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -248,7 +248,7 @@ namespace Persistence.Migrations
                     b.HasOne("Domain.Entities.PhysicalPerson", "Person")
                         .WithMany("Relatives")
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.PhysicalPerson", "RelatedPerson")

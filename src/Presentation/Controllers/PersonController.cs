@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+
 namespace Presentation.Controllers;
 
 [ApiController]
@@ -16,6 +17,7 @@ public class PersonController : ControllerBase
     public async Task<IActionResult> GetPersonById(int personId, CancellationToken cancellationToken)
     {
         var person = await _serviceManager.PersonService.GetByIdAsync(personId, cancellationToken);
+        
         return Ok(person);
     }
 
@@ -23,6 +25,7 @@ public class PersonController : ControllerBase
     public async Task<IActionResult> CreatePerson([FromBody] PersonForCreationDto personForCreationDto)
     {
         var createdPersonDto = await _serviceManager.PersonService.CreateAsync(personForCreationDto);
+        
         return CreatedAtAction(nameof(GetPersonById), new { personId = createdPersonDto.Id }, createdPersonDto);
     }
 
@@ -31,6 +34,15 @@ public class PersonController : ControllerBase
         CancellationToken cancellationToken)
     {
         await _serviceManager.PersonService.UpdateAsync(personId, personForUpdateDto, cancellationToken);
+        
+        return NoContent();
+    }
+
+    [HttpDelete("{personId}")]
+    public async Task<IActionResult> DeletePerson(int personId, CancellationToken cancellationToken)
+    {
+        await _serviceManager.PersonService.DeleteAsync(personId, cancellationToken);
+        
         return NoContent();
     }
 }

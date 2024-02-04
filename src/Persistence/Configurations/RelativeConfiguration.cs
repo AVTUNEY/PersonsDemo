@@ -11,7 +11,7 @@ public class RelativeConfiguration : IEntityTypeConfiguration<Relative>
         builder.HasOne(bc => bc.Person)
                .WithMany(r => r.Relatives)
                .HasForeignKey(bc => bc.PersonId)
-               .OnDelete(DeleteBehavior.Restrict);  
+               .OnDelete(DeleteBehavior.Cascade);  
         
         builder.HasOne(bc => bc.RelatedPerson)
             .WithMany()

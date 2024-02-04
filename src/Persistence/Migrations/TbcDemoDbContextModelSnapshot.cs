@@ -245,7 +245,7 @@ namespace Persistence.Migrations
                     b.HasOne("Domain.Entities.PhysicalPerson", "Person")
                         .WithMany("Relatives")
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.PhysicalPerson", "RelatedPerson")
