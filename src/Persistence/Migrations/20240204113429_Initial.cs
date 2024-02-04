@@ -34,7 +34,7 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Sex = table.Column<int>(type: "int", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
                     PersonalNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     BirthDate = table.Column<DateTime>(type: "date", nullable: false),
                     CityId = table.Column<int>(type: "int", nullable: false),
@@ -111,11 +111,11 @@ namespace Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "PhysicalPersons",
-                columns: new[] { "Id", "BirthDate", "CityId", "FirstName", "ImagePath", "LastName", "PersonalNumber", "Sex" },
+                columns: new[] { "Id", "BirthDate", "CityId", "FirstName", "Gender", "ImagePath", "LastName", "PersonalNumber" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "John", "john.jpg", "Doe", "123456789", 2 },
-                    { 2, new DateTime(1995, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Alice", "alice.jpg", "Smith", "987654321", 1 }
+                    { 1, new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "John", 2, "john.jpg", "Doe", "123456789" },
+                    { 2, new DateTime(1995, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Alice", 1, "alice.jpg", "Smith", "987654321" }
                 });
 
             migrationBuilder.InsertData(

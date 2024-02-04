@@ -12,7 +12,7 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(TbcDemoDbContext))]
-    [Migration("20240203171255_Initial")]
+    [Migration("20240204113429_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -136,6 +136,9 @@ namespace Persistence.Migrations
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -152,9 +155,6 @@ namespace Persistence.Migrations
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
-                    b.Property<int>("Sex")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
@@ -168,10 +168,10 @@ namespace Persistence.Migrations
                             BirthDate = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CityId = 1,
                             FirstName = "John",
+                            Gender = 2,
                             ImagePath = "john.jpg",
                             LastName = "Doe",
-                            PersonalNumber = "123456789",
-                            Sex = 2
+                            PersonalNumber = "123456789"
                         },
                         new
                         {
@@ -179,10 +179,10 @@ namespace Persistence.Migrations
                             BirthDate = new DateTime(1995, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CityId = 2,
                             FirstName = "Alice",
+                            Gender = 1,
                             ImagePath = "alice.jpg",
                             LastName = "Smith",
-                            PersonalNumber = "987654321",
-                            Sex = 1
+                            PersonalNumber = "987654321"
                         });
                 });
 

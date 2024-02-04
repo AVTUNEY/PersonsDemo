@@ -1,7 +1,3 @@
-using Domain.Entities.Enums;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.Extensions.DependencyInjection;
-
 namespace Persistence;
 
 public static class DataSeeder
@@ -41,7 +37,7 @@ public static class DataSeeder
                     Id = 1,
                     FirstName = "John",
                     LastName = "Doe",
-                    Sex = Gender.Male,
+                    Gender = Gender.Male,
                     PersonalNumber = "123456789",
                     BirthDate = new DateTime(1990, 1, 1),
                     ImagePath = "john.jpg",
@@ -53,7 +49,7 @@ public static class DataSeeder
                     Id = 2,
                     FirstName = "Alice",
                     LastName = "Smith",
-                    Sex = Gender.Female,
+                    Gender = Gender.Female,
                     PersonalNumber = "987654321",
                     BirthDate = new DateTime(1995, 5, 5),
                     ImagePath = "alice.jpg",

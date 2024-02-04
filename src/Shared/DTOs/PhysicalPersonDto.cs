@@ -1,4 +1,4 @@
-namespace Shared;
+namespace Shared.DTOs;
 
 public class PhysicalPersonDto
 {
@@ -16,10 +16,9 @@ public class PhysicalPersonDto
 
     public string City { get; set; }
 
-    public ICollection<string> PhoneNumbers { get; set; }
+    public ICollection<PhoneNumberDto> PhoneNumbers { get; set; }
 
     public string ImagePath { get; set; }
 
-    // Assuming you only want to expose the connected person types' ids in the DTO
-    public ICollection<int> ConnectedPersonTypeIds { get; set; }
+    public ICollection<RelativeDto> Relatives { get; set; }
 }

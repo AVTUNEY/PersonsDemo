@@ -12,7 +12,7 @@ public class PhysicalPersonConfiguration : IEntityTypeConfiguration<PhysicalPers
 
         builder.Property(p => p.LastName).IsRequired().HasMaxLength(50).IsUnicode();
 
-        builder.Property(p => p.Sex).IsRequired();
+        builder.Property(p => p.Gender).IsRequired();
 
         builder.Property(p => p.PersonalNumber).IsRequired().HasMaxLength(11);
 

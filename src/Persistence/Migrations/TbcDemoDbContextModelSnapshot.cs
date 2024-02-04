@@ -38,6 +38,23 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Tbilisi"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Batumi"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Gori"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.PhoneNumber", b =>
@@ -64,6 +81,36 @@ namespace Persistence.Migrations
                     b.HasIndex("PhysicalPersonId");
 
                     b.ToTable("PhoneNumbers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Number = "24324",
+                            PhysicalPersonId = 1,
+                            Type = 3
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Number = "123",
+                            PhysicalPersonId = 1,
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Number = "54543",
+                            PhysicalPersonId = 2,
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Number = "437",
+                            PhysicalPersonId = 2,
+                            Type = 1
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.PhysicalPerson", b =>
@@ -86,6 +133,9 @@ namespace Persistence.Migrations
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -102,14 +152,35 @@ namespace Persistence.Migrations
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
-                    b.Property<int>("Sex")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
 
                     b.ToTable("PhysicalPersons");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BirthDate = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CityId = 1,
+                            FirstName = "John",
+                            Gender = 2,
+                            ImagePath = "john.jpg",
+                            LastName = "Doe",
+                            PersonalNumber = "123456789"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BirthDate = new DateTime(1995, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CityId = 2,
+                            FirstName = "Alice",
+                            Gender = 1,
+                            ImagePath = "alice.jpg",
+                            LastName = "Smith",
+                            PersonalNumber = "987654321"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Relative", b =>
@@ -136,6 +207,15 @@ namespace Persistence.Migrations
                     b.HasIndex("RelatedPersonId");
 
                     b.ToTable("Relatives");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            PersonId = 1,
+                            RelatedPersonId = 2,
+                            RelationshipType = 2
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.PhoneNumber", b =>

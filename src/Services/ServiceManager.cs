@@ -1,6 +1,3 @@
-using Domain.Repositories;
-using Service.Abstractions;
-
 namespace Services;
 
 public class ServiceManager : IServiceManager

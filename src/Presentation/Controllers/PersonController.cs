@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Service.Abstractions;
-
 namespace Presentation.Controllers;
 
 [ApiController]
@@ -19,5 +17,20 @@ public class PersonController : ControllerBase
     {
         var person = await _serviceManager.PersonService.GetByIdAsync(personId, cancellationToken);
         return Ok(person);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreatePerson([FromBody] PersonForCreationDto personForCreationDto)
+    {
+        var createdPersonDto = await _serviceManager.PersonService.CreateAsync(personForCreationDto);
+        return CreatedAtAction(nameof(GetPersonById), new { personId = createdPersonDto.Id }, createdPersonDto);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdatePerson(int personId, [FromBody] PersonForUpdateDto personForUpdateDto,
+        CancellationToken cancellationToken)
+    {
+        await _serviceManager.PersonService.UpdateAsync(personId, personForUpdateDto, cancellationToken);
+        return NoContent();
     }
 }

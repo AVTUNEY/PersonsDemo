@@ -1,12 +1,9 @@
 namespace Persistence.Repositories;
 
-public sealed class PersonRepository : IPersonRepository
+public sealed class PersonRepository : RepositoryBase<PhysicalPerson>, IPersonRepository
 {
-    private readonly TbcDemoDbContext _dbContext;
-
-    public PersonRepository(TbcDemoDbContext dbContext)
+    public PersonRepository(TbcDemoDbContext dbContext) : base(dbContext)
     {
-        _dbContext = dbContext;
     }
 
     public async Task<IEnumerable<PhysicalPerson>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -45,18 +42,18 @@ public sealed class PersonRepository : IPersonRepository
             .ToListAsync(cancellationToken);
     }
  
-    public async Task InsertAsync(PhysicalPerson person, CancellationToken cancellationToken = default)
-    {
-        await _dbContext.PhysicalPersons.AddAsync(person, cancellationToken);
-    }
-
-    public void Update(PhysicalPerson person)
-    {
-        _dbContext.PhysicalPersons.Update(person);
-    }
-    
-    public void Remove(PhysicalPerson person)
-    {
-        _dbContext.PhysicalPersons.Remove(person);
-    }
+    // public async Task InsertAsync(PhysicalPerson person, CancellationToken cancellationToken = default)
+    // {
+    //     await _dbContext.PhysicalPersons.AddAsync(person, cancellationToken);
+    // }
+    //
+    // public void Update(PhysicalPerson person)
+    // {
+    //     _dbContext.PhysicalPersons.Update(person);
+    // }
+    //
+    // public void Remove(PhysicalPerson person)
+    // {
+    //     _dbContext.PhysicalPersons.Remove(person);
+    // }
 }

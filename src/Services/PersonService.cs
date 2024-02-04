@@ -1,7 +1,3 @@
-using Domain.Repositories;
-using Service.Abstractions;
-using Shared;
-
 namespace Services;
 
 internal sealed class PersonService : IPersonService
@@ -13,22 +9,55 @@ internal sealed class PersonService : IPersonService
         _repositoryManager = repositoryManager;
     }
 
+    public async Task<PhysicalPersonDto> CreateAsync(PersonForCreationDto personForCreationDto,
+        CancellationToken cancellationToken)
+    {
+        var person = personForCreationDto.PersonDtoToPerson();
+
+        _repositoryManager.PersonRepository.Create(person);
+        await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
+
+        var createdPersonDto = person.PersonToDto();
+
+        return createdPersonDto;
+    }
+
+    public async Task UpdateAsync(int personId, PersonForUpdateDto updatedPersonDto,
+        CancellationToken cancellationToken = default)
+    {
+        var person = await _repositoryManager.PersonRepository.GetSingleByCondition(
+            x => x.Id == personId, cancellationToken,
+            x => x.City,
+            x => x.PhoneNumbers,
+            x => x.Relatives);
+
+        if (person == null)
+        {
+            throw new PersonNotFoundException(personId);
+        }
+
+        person.UpdateFromDto(updatedPersonDto);
+
+        _repositoryManager.PersonRepository.Update(person);
+
+        await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
+    }
+
     public async Task<PhysicalPersonDto> GetByIdAsync(int personId, CancellationToken cancellationToken = default)
     {
-        var person = await _repositoryManager.PersonRepository.GetByIdAsync(personId, cancellationToken);
-        var ownersDto = new PhysicalPersonDto()
-        {
-            Id = person.Id,
-            FirstName = person.FirstName,
-            LastName = person.LastName,
-            BirthDate = person.BirthDate,
-            City = person.City.Name,
-            Gender = person.Sex.ToString(),
-            PersonalNumber = person.PersonalNumber,
-            PhoneNumbers = person.PhoneNumbers?.Select(phone => phone.Number).ToList(),
-            //ConnectedPersonTypeIds = person.ConnectedPersonTypes.Select(x => x.PhysicalPersonId).ToList()
-        };
+        var person = await _repositoryManager.PersonRepository.GetSingleByCondition(
+            x => x.Id == personId, cancellationToken,
+            x => x.City,
+            x => x.PhoneNumbers,
+            x => x.Relatives);
 
-        return ownersDto;
+        if (person is null)
+        {
+            throw new PersonNotFoundException(personId);
+        }
+        
+        var persons = person.PersonToDto();
+
+        return persons;
     }
 }

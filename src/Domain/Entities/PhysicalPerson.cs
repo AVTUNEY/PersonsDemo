@@ -8,7 +8,7 @@ public class PhysicalPerson
 
     public string LastName { get; set; }
 
-    public Gender Sex { get; set; }
+    public Gender Gender { get; set; }
     
     public string PersonalNumber { get; set; }
 
