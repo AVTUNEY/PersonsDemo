@@ -12,7 +12,7 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(TbcDemoDbContext))]
-    [Migration("20240203163833_Initial")]
+    [Migration("20240203171255_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

@@ -21,13 +21,13 @@ services:
       RESHARPER_LOG_CONF: "/riderLogsConf/backend-log.xml"
     image: "tbcdemowebapi:dev"
     ports:
-    - "127.0.0.1:57057:57100"
-    - "127.0.0.1:57257:57300"
+    - "127.0.0.1:57076:57100"
+    - "127.0.0.1:57276:57300"
     volumes:
     - "/Users/avtandili/.nuget/packages:/root/.nuget/fallbackpackages"
     - "/Users/avtandili/RiderProjects/TBCDemo/src/TBCDemo.WebApi:/app:rw"
     - "/Users/avtandili/RiderProjects/TBCDemo:/src:rw"
     - "/Users/avtandili/.local/share/JetBrains/RiderRemoteDebugger/2023.2.3/LinuxArm64:/riderDebugger"
     - "/Applications/Rider.app/Contents/bin:/riderLogsConf"
-    - "/Users/avtandili/Library/Logs/JetBrains/Rider2023.2/DebuggerWorker/JetBrains.Debugger.Worker.2024_2_03_20_39_24:/riderLogs:rw"
+    - "/Users/avtandili/Library/Logs/JetBrains/Rider2023.2/DebuggerWorker/JetBrains.Debugger.Worker.2024_2_04_00_03_19:/riderLogs:rw"
     working_dir: "/app"
