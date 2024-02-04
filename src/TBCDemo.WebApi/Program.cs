@@ -1,8 +1,11 @@
+using TBCDemo.WebApi.Middleware;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCustomServices();
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 app.UseCors("AllowAnyOrigin");
 
