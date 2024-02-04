@@ -12,8 +12,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(TbcDemoDbContext))]
-    [Migration("20240204143709_Initia22")]
-    partial class Initia22
+    [Migration("20240204152814_Initia2234")]
+    partial class Initia2234
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -183,6 +183,28 @@ namespace Persistence.Migrations
                             ImagePath = "alice.jpg",
                             LastName = "Smith",
                             PersonalNumber = "987654321"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BirthDate = new DateTime(1985, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CityId = 3,
+                            FirstName = "Bob",
+                            Gender = 2,
+                            ImagePath = "bob.jpg",
+                            LastName = "Johnson",
+                            PersonalNumber = "555555555"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            BirthDate = new DateTime(1980, 12, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CityId = 1,
+                            FirstName = "Eva",
+                            Gender = 1,
+                            ImagePath = "eva.jpg",
+                            LastName = "Brown",
+                            PersonalNumber = "111111111"
                         });
                 });
 
@@ -205,9 +227,10 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PersonId");
-
                     b.HasIndex("RelatedPersonId");
+
+                    b.HasIndex("PersonId", "RelatedPersonId")
+                        .IsUnique();
 
                     b.ToTable("Relatives");
 
@@ -218,6 +241,20 @@ namespace Persistence.Migrations
                             PersonId = 1,
                             RelatedPersonId = 2,
                             RelationshipType = 2
+                        },
+                        new
+                        {
+                            Id = 2,
+                            PersonId = 3,
+                            RelatedPersonId = 4,
+                            RelationshipType = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            PersonId = 3,
+                            RelatedPersonId = 1,
+                            RelationshipType = 3
                         });
                 });
 

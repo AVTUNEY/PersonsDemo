@@ -41,19 +41,4 @@ public sealed class PersonRepository : RepositoryBase<PhysicalPerson>, IPersonRe
             .Take(pageSize)
             .ToListAsync(cancellationToken);
     }
- 
-    // public async Task InsertAsync(PhysicalPerson person, CancellationToken cancellationToken = default)
-    // {
-    //     await _dbContext.PhysicalPersons.AddAsync(person, cancellationToken);
-    // }
-    //
-    // public void Update(PhysicalPerson person)
-    // {
-    //     _dbContext.PhysicalPersons.Update(person);
-    // }
-    //
-    // public void Remove(PhysicalPerson person)
-    // {
-    //     _dbContext.PhysicalPersons.Remove(person);
-    // }
 }

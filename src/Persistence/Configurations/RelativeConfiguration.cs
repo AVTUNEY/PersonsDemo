@@ -18,5 +18,6 @@ public class RelativeConfiguration : IEntityTypeConfiguration<Relative>
             .HasForeignKey(bc => bc.RelatedPersonId)
             .OnDelete(DeleteBehavior.Restrict); 
         
+        builder.HasIndex(bc => new { bc.PersonId, bc.RelatedPersonId }).IsUnique();
     }
 }

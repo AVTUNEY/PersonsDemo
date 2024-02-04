@@ -55,6 +55,28 @@ public static class DataSeeder
                     ImagePath = "alice.jpg",
                     CityId = 2
                 },
+                new PhysicalPerson
+                {
+                    Id = 3,
+                    FirstName = "Bob",
+                    LastName = "Johnson",
+                    Gender = Gender.Male,
+                    PersonalNumber = "555555555",
+                    BirthDate = new DateTime(1985, 8, 15),
+                    ImagePath = "bob.jpg",
+                    CityId = 3
+                },
+                new PhysicalPerson
+                {
+                    Id = 4,
+                    FirstName = "Eva",
+                    LastName = "Brown",
+                    Gender = Gender.Female,
+                    PersonalNumber = "111111111",
+                    BirthDate = new DateTime(1980, 12, 10),
+                    ImagePath = "eva.jpg",
+                    CityId = 1
+                },
             });
     }
 
@@ -104,7 +126,21 @@ public static class DataSeeder
                     PersonId = 1,
                     RelatedPersonId = 2,
                     RelationshipType = RelationshipType.Friend
-                }
+                },
+                new Relative()
+                {
+                    Id = 2,
+                    PersonId = 3,
+                    RelatedPersonId = 4,
+                    RelationshipType = RelationshipType.Collegue
+                },
+                new Relative()
+                {
+                    Id = 3,
+                    PersonId = 3,
+                    RelatedPersonId = 1,
+                    RelationshipType = RelationshipType.Relative
+                },
             });
     }
 }

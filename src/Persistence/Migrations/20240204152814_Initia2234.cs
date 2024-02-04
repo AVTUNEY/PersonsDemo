@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class Initia22 : Migration
+    public partial class Initia2234 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -115,7 +115,9 @@ namespace Persistence.Migrations
                 values: new object[,]
                 {
                     { 1, new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "John", 2, "john.jpg", "Doe", "123456789" },
-                    { 2, new DateTime(1995, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Alice", 1, "alice.jpg", "Smith", "987654321" }
+                    { 2, new DateTime(1995, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Alice", 1, "alice.jpg", "Smith", "987654321" },
+                    { 3, new DateTime(1985, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Bob", 2, "bob.jpg", "Johnson", "555555555" },
+                    { 4, new DateTime(1980, 12, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Eva", 1, "eva.jpg", "Brown", "111111111" }
                 });
 
             migrationBuilder.InsertData(
@@ -132,7 +134,12 @@ namespace Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "Relatives",
                 columns: new[] { "Id", "PersonId", "RelatedPersonId", "RelationshipType" },
-                values: new object[] { 1, 1, 2, 2 });
+                values: new object[,]
+                {
+                    { 1, 1, 2, 2 },
+                    { 2, 3, 4, 1 },
+                    { 3, 3, 1, 3 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PhoneNumbers_PhysicalPersonId",
@@ -145,9 +152,10 @@ namespace Persistence.Migrations
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Relatives_PersonId",
+                name: "IX_Relatives_PersonId_RelatedPersonId",
                 table: "Relatives",
-                column: "PersonId");
+                columns: new[] { "PersonId", "RelatedPersonId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Relatives_RelatedPersonId",
