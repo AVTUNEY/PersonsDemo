@@ -121,7 +121,7 @@ internal sealed class PersonService : IPersonService
         var resultDto = new ConnectedPersonsResultDto
         {
             Count = connectedPersonsList.Count,
-            ConnectionType = connectionType,
+            ConnectionType = connectionType.ToString(),
             ConnectedPersons = connectedPersonsList
         };
 

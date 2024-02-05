@@ -1,4 +1,6 @@
-using TBCDemo.WebApi.Middleware;
+using System.Net.Mime;
+using Microsoft.AspNetCore.Mvc;
+using Presentation;
 
 namespace TBCDemo.WebApi;
 
@@ -10,17 +12,30 @@ public static class ServiceCollectionExtensions
         services.AddSwaggerGen();
         services.AddCors(options =>
         {
-            options.AddPolicy("AllowAnyOrigin", builder => { builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); });
+            options.AddPolicy("AllowAnyOrigin",
+                builder => { builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); });
         });
         services.AddTransient<ExceptionHandlingMiddleware>();
-        
+
         services.AddScoped<IServiceManager, ServiceManager>();
         services.AddScoped<IRepositoryManager, RepositoryManager>();
-
+       
         var connectionString = ConnectionStringHelper.Get();
         services.AddDbContext<TbcDemoDbContext>(options => options.UseSqlServer(connectionString));
-        services.AddControllers().AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
+        services.AddControllers()
+            .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly).ConfigureApiBehaviorOptions(options =>
+            {
+                options.InvalidModelStateResponseFactory = context =>
+                {
+                    var result = new ValidationFailedResult(context.ModelState);
 
+                    result.ContentTypes.Add(MediaTypeNames.Application.Json);
+                    result.ContentTypes.Add(MediaTypeNames.Application.Xml);
+
+                    return result;
+                };
+            });;
+        
         return services;
     }
 }

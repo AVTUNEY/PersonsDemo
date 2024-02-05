@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Presentation.Controllers;
 
 [ApiController]
+[ValidateModel]
 [Route("api/v1/persons")]
 public class PersonController : ControllerBase
 {

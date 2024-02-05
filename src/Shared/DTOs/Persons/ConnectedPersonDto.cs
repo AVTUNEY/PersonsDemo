@@ -10,6 +10,6 @@ public class ConnectedPersonDto
 public class ConnectedPersonsResultDto
 {
     public int Count { get; set; }
-    public ConnectionType ConnectionType { get; set; }
+    public string ConnectionType { get; set; }
     public List<ConnectedPersonDto> ConnectedPersons { get; set; }
 }

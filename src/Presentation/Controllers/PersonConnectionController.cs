@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Presentation.Controllers;
 
 [ApiController]
+[ValidateModel]
 [Route("api/v1/person-connection")]
 public class PersonConnectionController : ControllerBase
 {
