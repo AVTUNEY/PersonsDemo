@@ -6,6 +6,8 @@ public class PersonConnectionConfiguration : IEntityTypeConfiguration<PersonConn
     {
         builder
             .HasKey(pc => pc.Id);
+        
+        builder.HasIndex(bc => new { bc.PersonId, bc.ConnectedPersonId }).IsUnique();
 
         builder
             .HasOne(pc => pc.Person)
@@ -15,10 +17,9 @@ public class PersonConnectionConfiguration : IEntityTypeConfiguration<PersonConn
 
         builder
             .HasOne(pc => pc.ConnectedPerson)
-            .WithMany() // Omit the navigation property here since it's not explicitly declared in PersonConnection
+            .WithMany()
             .HasForeignKey(pc => pc.ConnectedPersonId)
             .OnDelete(DeleteBehavior.Cascade);
         
-        builder.HasIndex(bc => new { bc.PersonId, bc.ConnectedPersonId }).IsUnique();
     }
 }

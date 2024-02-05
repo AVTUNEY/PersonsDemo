@@ -1,4 +1,3 @@
-using Domain.Entities.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers;

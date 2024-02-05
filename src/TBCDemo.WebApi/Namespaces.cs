@@ -8,7 +8,7 @@ global using TBCDemo.WebApi;
 global using System.Text.Json;
 global using Domain.Exceptions;
 global using TBCDemo.WebApi.Middleware;
-global using FluentValidation;
-global using Shared.DTOs.Persons;
-global using Shared.Validators;
-
+global using System.Net.Mime;
+global using Presentation;
+global using System.Globalization;
+global using Shared.Resources;

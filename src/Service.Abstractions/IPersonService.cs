@@ -14,6 +14,6 @@ public interface IPersonService
     Task<PagedResult<PhysicalPersonDto>> DetailedSearchAndPaginate(string firstName, string lastName,
         string personalNumber, int pageNumber, int pageSize);
 
-    ConnectedPersonsResultDto GetConnectionReport(int targetPersonId,
+    ConnectedPersonsResult GetConnectionReport(int targetPersonId,
         ConnectionType connectionType);
 }

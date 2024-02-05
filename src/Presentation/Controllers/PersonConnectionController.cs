@@ -22,10 +22,10 @@ public class PersonConnectionController : ControllerBase
         return Ok(dto);
     }
     
-    [HttpDelete("{personId}")]
-    public async Task<IActionResult> DeletePersonConnection(int personId, CancellationToken cancellationToken)
+    [HttpDelete("{connectionId}")]
+    public async Task<IActionResult> DeletePersonConnection(int connectionId, CancellationToken cancellationToken)
     {
-        await _serviceManager.PersonConnectionService.DeleteAsync(personId, cancellationToken);
+        await _serviceManager.PersonConnectionService.DeleteAsync(connectionId, cancellationToken);
         
         return NoContent();
     }

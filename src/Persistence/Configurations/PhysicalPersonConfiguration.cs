@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-
 namespace Persistence.Configurations;
 
 public class PhysicalPersonConfiguration : IEntityTypeConfiguration<PhysicalPerson>

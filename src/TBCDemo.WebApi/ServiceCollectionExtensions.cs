@@ -1,13 +1,17 @@
-using System.Net.Mime;
-using Microsoft.AspNetCore.Mvc;
-using Presentation;
-
 namespace TBCDemo.WebApi;
 
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddCustomServices(this IServiceCollection services)
     {
+        services.AddLocalization();
+        services.AddMvc()
+            .AddDataAnnotationsLocalization(options =>
+            {
+                options.DataAnnotationLocalizerProvider = (type, factory) =>
+                    factory.Create(typeof(SharedResource));
+            });
+
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         services.AddCors(options =>
@@ -15,11 +19,11 @@ public static class ServiceCollectionExtensions
             options.AddPolicy("AllowAnyOrigin",
                 builder => { builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); });
         });
-        services.AddTransient<ExceptionHandlingMiddleware>();
 
+        services.AddTransient<ExceptionHandlingMiddleware>();
         services.AddScoped<IServiceManager, ServiceManager>();
         services.AddScoped<IRepositoryManager, RepositoryManager>();
-       
+
         var connectionString = ConnectionStringHelper.Get();
         services.AddDbContext<TbcDemoDbContext>(options => options.UseSqlServer(connectionString));
         services.AddControllers()
@@ -34,8 +38,7 @@ public static class ServiceCollectionExtensions
 
                     return result;
                 };
-            });;
-        
+            });
         return services;
     }
 }

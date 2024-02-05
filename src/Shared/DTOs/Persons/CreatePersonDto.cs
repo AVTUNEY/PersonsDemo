@@ -1,41 +1,27 @@
-using System.ComponentModel.DataAnnotations;
-using Shared.Validators;
-
 namespace Shared.DTOs.Persons;
 
 public record CreatePersonDto(
-    [Required(ErrorMessage = "First name is required.")]
-    [StringLength(50, MinimumLength = 2, ErrorMessage = "First name should be between 2 and 50 characters.")]
+    [Required(ErrorMessage = "RequiredErrorMessage")]
+    [StringLength(50, MinimumLength = 2, ErrorMessage = "StringLengthErrorMessage")]
     [RegularExpression(@"^(([\p{IsGeorgian}]+)|([A-Za-z]+))$",
-        ErrorMessage = "First name should only contain either Georgian or English alphabet characters.")]
+        ErrorMessage = "InvalidCharactersErrorMessage")]
     string FirstName,
-    [Required(ErrorMessage = "Last name is required.")]
-    [StringLength(50, MinimumLength = 2, ErrorMessage = "Last name should be between 2 and 50 characters.")]
+    [Required(ErrorMessage = "RequiredErrorMessage")]
+    [StringLength(50, MinimumLength = 2, ErrorMessage = "StringLengthErrorMessage")]
     [RegularExpression(@"^(([\p{IsGeorgian}]+)|([A-Za-z]+))$",
-        ErrorMessage = "Last name should only contain either Georgian or English alphabet characters.")]
+        ErrorMessage = "InvalidCharactersErrorMessage")]
     string LastName,
     Gender Gender,
-    [Required(ErrorMessage = "Personal Number is required.")]
-    [StringLength(11, MinimumLength = 11, ErrorMessage = "Personal Number should contain 11 digit")]
-    [RegularExpression(@"^\d+$", ErrorMessage = "Personal Number should only contain digits")]
+    [Required(ErrorMessage = "RequiredErrorMessage")]
+    [StringLength(11, MinimumLength = 11, ErrorMessage = "PersonalNumberDigitsNumberErrorMessage")]
+    [RegularExpression(@"^\d+$", ErrorMessage = "PersonalNumberDigitsOnlyErrorMessage")]
     string PersonalNumber,
-    [MinimumAge(18, ErrorMessage = "You must be at least 18 years old.")]
+    [MinimumAge(18, ErrorMessage = "AgeRestrictionErrorMessage")]
     DateTime BirthDate,
     int CityId,
     IEnumerable<PhoneNumberDto> PhoneNumbers,
     IEnumerable<PersonConnectionDto> ConnectedPersons,
     string ImagePath
-);
-
-public record PersonConnectionDto(
-    int? ConnectedPersonId,
-    ConnectionType ConnectionType
-);
-
-public record ConnectedPersonsDto(
-    int? PersonId,
-    int? ConnectedPersonId,
-    ConnectionType ConnectionType
 );
 
 public record PhoneNumberDto(

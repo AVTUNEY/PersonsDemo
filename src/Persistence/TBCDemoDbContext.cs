@@ -19,9 +19,4 @@ public class TbcDemoDbContext : DbContext
         modelBuilder.PersonConnectionsSeed();
         modelBuilder.PhoneNumbersSeed();
     }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        base.OnConfiguring(optionsBuilder);
-    }
 }

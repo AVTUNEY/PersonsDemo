@@ -60,10 +60,12 @@ public static class PersonMappingExtensions
         );
     }
 
-    public static void UpdateFromDto(this PhysicalPerson person, PersonForUpdateDto updatedPersonDto)
+    public static void MapPersonToUpdateDto(this PhysicalPerson person, PersonForUpdateDto updatedPersonDto)
     {
         if (person == null || updatedPersonDto == null)
+        {
             return;
+        }
 
         person.FirstName = updatedPersonDto.FirstName;
         person.LastName = updatedPersonDto.LastName;
@@ -71,8 +73,6 @@ public static class PersonMappingExtensions
         person.PersonalNumber = updatedPersonDto.PersonalNumber;
         person.BirthDate = updatedPersonDto.BirthDate;
         person.CityId = updatedPersonDto.CityId;
-
-        // Update PhoneNumbers (replace existing PhoneNumbers with the new ones)
         person.PhoneNumbers = updatedPersonDto.PhoneNumbers?.Select(phone => new PhoneNumber
         {
             Number = phone.PhoneNumber,

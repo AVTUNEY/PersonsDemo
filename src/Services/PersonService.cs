@@ -1,5 +1,3 @@
-using Domain.Entities.Enums;
-
 namespace Services;
 
 internal sealed class PersonService : IPersonService
@@ -41,7 +39,7 @@ internal sealed class PersonService : IPersonService
             throw new PersonNotFoundException(personId);
         }
 
-        person.UpdateFromDto(updatedPersonDto);
+        person.MapPersonToUpdateDto(updatedPersonDto);
 
         _repositoryManager.PersonRepository.Update(person);
 
@@ -103,14 +101,14 @@ internal sealed class PersonService : IPersonService
         return pagedList.GetPagedResult(pageNumber);
     }
 
-    public ConnectedPersonsResultDto GetConnectionReport(int targetPersonId,
+    public ConnectedPersonsResult GetConnectionReport(int targetPersonId,
         ConnectionType connectionType)
     {
         var persons =
             _repositoryManager.PersonRepository.GetConnectedPersonsByType(targetPersonId, connectionType);
 
         var connectedPersonsList = persons
-            .Select(p => new ConnectedPersonDto
+            .Select(p => new ConnectedPersonInfoDto
             {
                 Id = p.Id,
                 FirstName = p.FirstName,
@@ -118,7 +116,7 @@ internal sealed class PersonService : IPersonService
             })
             .ToList();
 
-        var resultDto = new ConnectedPersonsResultDto
+        var resultDto = new ConnectedPersonsResult
         {
             Count = connectedPersonsList.Count,
             ConnectionType = connectionType.ToString(),

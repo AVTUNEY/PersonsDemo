@@ -9,7 +9,7 @@ public class PersonConnectionService : IPersonConnectionService
         _repositoryManager = repositoryManager;
     }
 
-    public async Task<ConnectedPersonsDto> CreateAsync(CreatePersonConnectionDto createPersonConnectionDto,
+    public async Task<ConnectedPersonsRelationshipDto> CreateAsync(CreatePersonConnectionDto createPersonConnectionDto,
         CancellationToken cancellationToken = default)
     {
         var personConnection = new PersonConnection()
@@ -24,7 +24,7 @@ public class PersonConnectionService : IPersonConnectionService
         await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         var createdRelation =
-            new ConnectedPersonsDto(personConnection.PersonId, personConnection.ConnectedPersonId,
+            new ConnectedPersonsRelationshipDto(personConnection.PersonId, personConnection.ConnectedPersonId,
                 personConnection.ConnectionType);
 
         return createdRelation;
