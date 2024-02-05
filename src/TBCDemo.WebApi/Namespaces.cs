@@ -12,3 +12,4 @@ global using System.Net.Mime;
 global using Presentation;
 global using System.Globalization;
 global using Shared.Resources;
+global using Persistence.Helpers;

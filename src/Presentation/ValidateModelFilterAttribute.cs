@@ -9,17 +9,17 @@ public class ValidationResultModel
     {
         Status = "400";
         Errors = modelState.Keys
-            .SelectMany(key => modelState[key].Errors.Select(x => new ValidationError(key, x.ErrorMessage)))
+            .SelectMany(key => modelState[key]?.Errors.Select(x => new ValidationError(key, x.ErrorMessage)) ?? Array.Empty<ValidationError>())
             .ToList();
     }
 }
 public class ValidationError
 { 
-    public string Field { get; }
+    public string? Field { get; }
 
     public string Message { get; }
 
-    public ValidationError(string field, string message)
+    public ValidationError(string? field, string message)
     {
         Field = field != string.Empty ? field : null;
         Message = message;

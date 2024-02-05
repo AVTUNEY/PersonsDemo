@@ -1,4 +1,4 @@
-namespace Persistence;
+namespace Persistence.Helpers;
 
 public static class ConnectionStringHelper
 {
