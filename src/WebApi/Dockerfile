@@ -11,7 +11,7 @@ COPY ["src/Presentation/Presentation.csproj", "src/Presentation/"]
 COPY ["src/Service.Abstractions/Service.Abstractions.csproj", "src/Service.Abstractions/"]
 COPY ["src/Shared/Shared.csproj", "src/Shared/"]
 COPY ["src/Services/Services.csproj", "src/Services/"]
-COPY ["tests/UnitTests/UnitTests.csproj", "tests/UnitTests"]
+COPY ["tests/UnitTests/UnitTests.csproj", "tests/UnitTests/"]
 RUN dotnet restore "src/WebApi/WebApi.csproj"
 COPY . .
 WORKDIR "/src/src/WebApi"
