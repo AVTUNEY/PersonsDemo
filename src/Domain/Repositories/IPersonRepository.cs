@@ -9,4 +9,6 @@ public interface IPersonRepository : IRepositoryBase<PhysicalPerson>
 
     IEnumerable<PhysicalPerson> GetConnectedPersonsByType(int targetPersonId,
         ConnectionType connectionType);
+
+    Task<PhysicalPerson> GetByIdAsync(int personId, CancellationToken cancellationToken = default);
 }

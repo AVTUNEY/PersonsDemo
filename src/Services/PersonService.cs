@@ -32,11 +32,7 @@ internal sealed class PersonService : IPersonService
     public async Task UpdateAsync(int personId, UpdatePersonDto? updatedPersonDto,
         CancellationToken cancellationToken = default)
     {
-        var person = await _repositoryManager.PersonRepository.GetSingleByCondition(
-            x => x.Id == personId, cancellationToken,
-            x => x.City,
-            x => x.PhoneNumbers,
-            x => x.PersonConnections);
+        var person = await _repositoryManager.PersonRepository.GetByIdAsync(personId, cancellationToken);
 
         if (person == null)
         {
@@ -52,11 +48,7 @@ internal sealed class PersonService : IPersonService
 
     public async Task<PhysicalPersonDto> GetByIdAsync(int personId, CancellationToken cancellationToken = default)
     {
-        var person = await _repositoryManager.PersonRepository.GetSingleByCondition(
-            x => x.Id == personId, cancellationToken,
-            x => x.City,
-            x => x.PhoneNumbers,
-            x => x.PersonConnections);
+        var person = await _repositoryManager.PersonRepository.GetByIdAsync(personId, cancellationToken);
 
         if (person is null)
         {
@@ -71,8 +63,7 @@ internal sealed class PersonService : IPersonService
     public async Task DeleteAsync(int personId, CancellationToken cancellationToken)
     {
         var person =
-            await _repositoryManager.PersonRepository.GetSingleByCondition(x => x.Id == personId, cancellationToken,
-                x => x.PersonConnections, x => x.PhoneNumbers);
+            await _repositoryManager.PersonRepository.GetByIdAsync(personId, cancellationToken);
 
         if (person is null)
         {
@@ -140,10 +131,12 @@ internal sealed class PersonService : IPersonService
                 Directory.CreateDirectory(uploadsFolder);
             }
 
-            var uniqueFileName = Guid.NewGuid().ToString() + "_" + photo.Name;
+            var uniqueFileName = Guid.NewGuid() + "_" + photo.Name;
             var filePath = Path.Combine("images", uniqueFileName);
+            var fileExtension = Path.GetExtension(photo.File.FileName);
+            var fullPath = Path.Combine(uploadsFolder, uniqueFileName) + fileExtension;
+            var fileWithExtension = filePath + fileExtension;
 
-            var fullPath = Path.Combine(uploadsFolder, uniqueFileName) + Path.GetExtension(photo.File.FileName);
             await using (var fileStream = new FileStream(fullPath, FileMode.Create))
             {
                 await photo.File.CopyToAsync(fileStream, token);
@@ -156,7 +149,6 @@ internal sealed class PersonService : IPersonService
                 throw new PersonNotFoundException(personId);
             }
 
-            var fileWithExtension = filePath + Path.GetExtension(photo.File.FileName);
             person.ImagePath = fileWithExtension;
             _repositoryManager.PersonRepository.Update(person);
             await _repositoryManager.UnitOfWork.SaveChangesAsync(token);
