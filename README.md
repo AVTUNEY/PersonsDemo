@@ -1,37 +1,45 @@
-# Foobar
+# TBC Demo Api
 
-Foobar is a Python library for dealing with word pluralization.
+Api to manage persons
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+It is important to install [Docker](https://www.docker.com/products/docker-desktop/).
+
+Depending on which OS you use, you will need to run these scripts.
+
+Windows
 
 ```bash
-pip install foobar
+dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p password
+dotnet dev-certs https --trust
 ```
+macOS
+```bash
+dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p password
+dotnet dev-certs https --trust
+```
+
+
+
+Open Terminal or Command prompt and run 
+```bash
+docker compose up -d
+```
+
+And you are ready to go.
 
 ## Usage
 
-```python
-import foobar
+Application by default is hosted at http://localhost:80
 
-# returns 'words'
-foobar.pluralize('word')
+to use swagger use http://localhost:80/swagger
 
-# returns 'geese'
-foobar.pluralize('goose')
-
-# returns 'phenomenon'
-foobar.singularize('phenomena')
+### MSSQL Database credentials
 ```
+Host: localhost,18001
 
-## Contributing
+User: sa
 
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
-
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
+Password: Admin123
+```
