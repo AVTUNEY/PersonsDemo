@@ -3,8 +3,13 @@ namespace TBCDemo.WebApi.Middleware;
 public class ExceptionHandlingMiddleware : IMiddleware
 {
     private readonly ILogger<ExceptionHandlingMiddleware> _logger;
+    private readonly IStringLocalizer<SharedResource> _localizer;
 
-    public ExceptionHandlingMiddleware(ILogger<ExceptionHandlingMiddleware> logger) => _logger = logger;
+    public ExceptionHandlingMiddleware(ILogger<ExceptionHandlingMiddleware> logger, IStringLocalizer<SharedResource> localizer)
+    {
+        _logger = logger;
+        _localizer = localizer;
+    }
 
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
@@ -15,7 +20,6 @@ public class ExceptionHandlingMiddleware : IMiddleware
         catch (Exception e)
         {
             _logger.LogError(e, e.Message);
-
             await HandleExceptionAsync(context, e);
         }
     }
@@ -23,15 +27,21 @@ public class ExceptionHandlingMiddleware : IMiddleware
     private async Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
         context.Response.ContentType = "application/json";
-        context.Response.StatusCode = exception switch
+
+        var statusCode = StatusCodes.Status500InternalServerError;
+        var errorMessage = _localizer["DefaultErrorMessage"];
+
+        if (exception is PersonNotFoundException notFoundException)
         {
-            NotFoundException => StatusCodes.Status404NotFound,
-            _ => StatusCodes.Status500InternalServerError,
-        };
+            statusCode = StatusCodes.Status404NotFound;
+            errorMessage = _localizer["PersonNotFoundErrorMessage", notFoundException.PersonId];
+        }
+       
+        context.Response.StatusCode = statusCode;
 
         var response = new
         {
-            Error = exception.Message
+            Error = errorMessage.Value
         };
 
         await context.Response.WriteAsync(JsonSerializer.Serialize(response));

@@ -5,9 +5,9 @@ public class ServiceManager : IServiceManager
     private readonly Lazy<IPersonService> _lazyPersonService;
     private readonly Lazy<IPersonConnectionService> _lazyPersonConnectionService;
 
-    public ServiceManager(IRepositoryManager repositoryManager)
+    public ServiceManager(IRepositoryManager repositoryManager,IHostEnvironment environment)
     {
-        _lazyPersonService = new Lazy<IPersonService>(() => new PersonService(repositoryManager));
+        _lazyPersonService = new Lazy<IPersonService>(() => new PersonService(repositoryManager,environment));
         _lazyPersonConnectionService = new Lazy<IPersonConnectionService>(() => new PersonConnectionService(repositoryManager));
     }
 

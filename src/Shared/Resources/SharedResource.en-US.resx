@@ -18,26 +18,34 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
+
     <data name="StringLengthErrorMessage" xml:space="preserve">
-        <value>{0} should be between 2 and 50 characters.
-        </value>
-    </data>
+    <value>{0} should be between 2 and 50 characters.
+    </value>
+</data>
     <data name="RequiredErrorMessage" xml:space="preserve">
-        <value>{0} is required.</value>
-    </data>
+    <value>{0} is required.</value>
+</data>
     <data name="InvalidCharactersErrorMessage" xml:space="preserve">
-        <value>{0} should only contain either Georgian or English alphabet characters.</value>
-    </data>
+    <value>{0} should only contain either Georgian or English alphabet characters.</value>
+</data>
     <data name="AgeRestrictionErrorMessage" xml:space="preserve">
-        <value>You must be at least 18 years old.</value>
-    </data>
+    <value>You must be at least 18 years old.</value>
+</data>
     <data name="PersonalNumberDigitsOnlyErrorMessage" xml:space="preserve">
-        <value>Personal Number should only contain digits</value>
-    </data>
+    <value>Personal Number should only contain digits</value>
+</data>
     <data name="PersonalNumberDigitsNumberErrorMessage" xml:space="preserve">
-        <value>Personal Number should contain 11 digit</value>
-    </data>
+    <value>Personal Number should contain 11 digit</value>
+</data>
     <data name="InvalidDataTypeForDate" xml:space="preserve">
-        <value>Invalid data type for the BirthDate property.</value>
-    </data>
+    <value>Invalid data type for the BirthDate property.</value>
+</data>
+    <data name="PersonNotFoundErrorMessage" xml:space="preserve">
+    <value>The person with the identifier {0} was not found.</value>
+</data>
+    <data name="DefaultErrorMessage" xml:space="preserve">
+    <value>Something is wrong</value>
+</data>
+
 </root>

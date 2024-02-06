@@ -60,7 +60,7 @@ public static class PersonMappingExtensions
         );
     }
 
-    public static void MapPersonToUpdateDto(this PhysicalPerson person, PersonForUpdateDto? updatedPersonDto)
+    public static void MapPersonToUpdateDto(this PhysicalPerson person, UpdatePersonDto? updatedPersonDto)
     {
         person.FirstName = updatedPersonDto.FirstName;
         person.LastName = updatedPersonDto.LastName;

@@ -24,6 +24,7 @@ public class ValidationResultModel
             .ToList();
     }
 }
+
 public class ValidationError
 { 
     public string? Field { get; }

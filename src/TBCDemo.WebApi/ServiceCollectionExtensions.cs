@@ -19,7 +19,7 @@ public static class ServiceCollectionExtensions
             options.AddPolicy("AllowAnyOrigin",
                 builder => { builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); });
         });
-
+        
         services.AddTransient<ExceptionHandlingMiddleware>();
         services.AddScoped<IServiceManager, ServiceManager>();
         services.AddScoped<IRepositoryManager, RepositoryManager>();

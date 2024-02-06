@@ -13,3 +13,4 @@ global using Presentation;
 global using System.Globalization;
 global using Shared.Resources;
 global using Persistence.Helpers;
+global using Microsoft.Extensions.Localization;

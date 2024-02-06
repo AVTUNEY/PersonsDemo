@@ -1,12 +1,16 @@
+using Microsoft.Extensions.Hosting;
+
 namespace Services;
 
 internal sealed class PersonService : IPersonService
 {
     private readonly IRepositoryManager _repositoryManager;
+    private readonly IHostEnvironment _environment;
 
-    public PersonService(IRepositoryManager repositoryManager)
+    public PersonService(IRepositoryManager repositoryManager, IHostEnvironment environment)
     {
         _repositoryManager = repositoryManager;
+        _environment = environment;
     }
 
     public async Task<PhysicalPersonDto> CreateAsync(CreatePersonDto createPersonDto,
@@ -25,7 +29,7 @@ internal sealed class PersonService : IPersonService
         return createdPersonDto;
     }
 
-    public async Task UpdateAsync(int personId, PersonForUpdateDto? updatedPersonDto,
+    public async Task UpdateAsync(int personId, UpdatePersonDto? updatedPersonDto,
         CancellationToken cancellationToken = default)
     {
         var person = await _repositoryManager.PersonRepository.GetSingleByCondition(
@@ -124,5 +128,38 @@ internal sealed class PersonService : IPersonService
         };
 
         return resultDto;
+    }
+
+    public async Task UploadPhoto(int personId, UploadPersonPhoto photo, CancellationToken token)
+    {
+        if (photo.File.Length > 0)
+        {
+            var uploadsFolder = Path.Combine(_environment.ContentRootPath, "images");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            var uniqueFileName = Guid.NewGuid().ToString() + "_" + photo.Name;
+            var filePath = Path.Combine("images", uniqueFileName);
+
+            var fullPath = Path.Combine(uploadsFolder, uniqueFileName) + Path.GetExtension(photo.File.FileName);
+            await using (var fileStream = new FileStream(fullPath, FileMode.Create))
+            {
+                await photo.File.CopyToAsync(fileStream, token);
+            }
+
+            var person = await _repositoryManager.PersonRepository.GetSingleByCondition(
+                x => x.Id == personId, token);
+            if (person == null)
+            {
+                throw new PersonNotFoundException(personId);
+            }
+
+            var fileWithExtension = filePath + Path.GetExtension(photo.File.FileName);
+            person.ImagePath = fileWithExtension;
+            _repositoryManager.PersonRepository.Update(person);
+            await _repositoryManager.UnitOfWork.SaveChangesAsync(token);
+        }
     }
 }

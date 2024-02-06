@@ -1,6 +1,6 @@
 namespace Shared.DTOs.Persons;
 
-public record PersonForUpdateDto(
+public record UpdatePersonDto(
     [Required(ErrorMessage = "RequiredErrorMessage")]
     [StringLength(50, MinimumLength = 2, ErrorMessage = "StringLengthErrorMessage")]
     [RegularExpression(@"^(([\p{IsGeorgian}]+)|([A-Za-z]+))$",
