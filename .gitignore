@@ -10,3 +10,4 @@ secrets/
 src/.idea
 TBCDemo.sln.DotSettings.user
 .vs/
+/src/WebApi/WebApi.csproj.user
