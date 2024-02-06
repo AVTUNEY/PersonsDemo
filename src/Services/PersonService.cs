@@ -6,7 +6,7 @@ internal sealed class PersonService : IPersonService
 {
     private readonly IRepositoryManager _repositoryManager;
     private readonly IHostEnvironment _environment;
-
+    private const string ImageDirectoryName = "images";
     public PersonService(IRepositoryManager repositoryManager, IHostEnvironment environment)
     {
         _repositoryManager = repositoryManager;
@@ -55,9 +55,9 @@ internal sealed class PersonService : IPersonService
             throw new PersonNotFoundException(personId);
         }
 
-        var persons = person.MapPersonsDto();
+        var result = person.MapPersonsDto();
 
-        return persons;
+        return result;
     }
 
     public async Task DeleteAsync(int personId, CancellationToken cancellationToken)
@@ -111,28 +111,28 @@ internal sealed class PersonService : IPersonService
             })
             .ToList();
 
-        var resultDto = new ConnectedPersonsResult
+        var result = new ConnectedPersonsResult
         {
             Count = connectedPersonsList.Count,
             ConnectionType = connectionType.ToString(),
             ConnectedPersons = connectedPersonsList
         };
 
-        return resultDto;
+        return result;
     }
 
     public async Task UploadPhoto(int personId, UploadPersonPhoto photo, CancellationToken token)
     {
         if (photo.File.Length > 0)
         {
-            var uploadsFolder = Path.Combine(_environment.ContentRootPath, "images");
+            var uploadsFolder = Path.Combine(_environment.ContentRootPath, ImageDirectoryName);
             if (!Directory.Exists(uploadsFolder))
             {
                 Directory.CreateDirectory(uploadsFolder);
             }
 
             var uniqueFileName = Guid.NewGuid() + "_" + photo.Name;
-            var filePath = Path.Combine("images", uniqueFileName);
+            var filePath = Path.Combine(ImageDirectoryName, uniqueFileName);
             var fileExtension = Path.GetExtension(photo.File.FileName);
             var fullPath = Path.Combine(uploadsFolder, uniqueFileName) + fileExtension;
             var fileWithExtension = filePath + fileExtension;
@@ -150,6 +150,7 @@ internal sealed class PersonService : IPersonService
             }
 
             person.ImagePath = fileWithExtension;
+            
             _repositoryManager.PersonRepository.Update(person);
             await _repositoryManager.UnitOfWork.SaveChangesAsync(token);
         }

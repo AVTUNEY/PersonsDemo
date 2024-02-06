@@ -1,5 +1,3 @@
-using WebApi.Middleware;
-
 namespace WebApi;
 
 public static class ServiceCollectionExtensions
