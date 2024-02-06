@@ -34,28 +34,28 @@ public class PersonController : ControllerBase
     public async Task<IActionResult> DetailedSearch(string firstName, string lastName, string personalNumber,
         int pageNumber = 1, int pageSize = 10)
     {
-        var detailedSearchResults =
+        var result =
             await _serviceManager.PersonService.DetailedSearchAndPaginate(firstName, lastName, personalNumber,
                 pageNumber, pageSize);
 
-        return Ok(detailedSearchResults);
+        return Ok(result);
     }
 
     [HttpGet("{targetPersonId}/{connectionType}")]
     public IActionResult GetConnectionReport(int targetPersonId, ConnectionType connectionType)
     {
-        var resultDto =
-            _serviceManager.PersonService.GetConnectionReport(targetPersonId, connectionType);
+        var result = _serviceManager.PersonService.GetConnectionReport(targetPersonId, connectionType);
 
-        return Ok(resultDto);
+        return Ok(result);
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreatePerson([FromBody] CreatePersonDto createPersonDto)
+    public async Task<IActionResult> CreatePerson([FromBody] CreatePersonDto createPersonDto,
+        CancellationToken cancellationToken)
     {
-        var createdPersonDto = await _serviceManager.PersonService.CreateAsync(createPersonDto);
+        var result = await _serviceManager.PersonService.CreateAsync(createPersonDto, cancellationToken);
 
-        return CreatedAtAction(nameof(GetPersonById), new { personId = createdPersonDto.Id }, createdPersonDto);
+        return CreatedAtAction(nameof(GetPersonById), new { personId = result.Id }, result);
     }
 
     [HttpPut]
