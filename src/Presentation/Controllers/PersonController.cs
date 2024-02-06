@@ -25,9 +25,9 @@ public class PersonController : ControllerBase
     [HttpGet("search")]
     public async Task<IActionResult> QuickSearch(string searchTerm, int pageNumber = 1, int pageSize = 10)
     {
-        var searchResults = await _serviceManager.PersonService.SearchAndPaginate(searchTerm, pageNumber, pageSize);
+        var result = await _serviceManager.PersonService.SearchAndPaginate(searchTerm, pageNumber, pageSize);
 
-        return Ok(searchResults);
+        return Ok(result);
     }
 
     [HttpGet("detailedSearch")]

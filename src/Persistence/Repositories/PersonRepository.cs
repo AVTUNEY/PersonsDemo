@@ -53,13 +53,13 @@ public sealed class PersonRepository : RepositoryBase<PhysicalPerson>, IPersonRe
     public IEnumerable<PhysicalPerson> GetConnectedPersonsByType(int targetPersonId,
         ConnectionType connectionType)
     {
-        var connectedPersonsQuery = _dbContext.PersonConnections
+        var connectedPersons = _dbContext.PersonConnections
             .Where(r => (r.PersonId == targetPersonId || r.ConnectedPersonId == targetPersonId) &&
                         r.ConnectionType == connectionType)
             .Select(r => r.PersonId == targetPersonId ? r.ConnectedPerson : r.Person);
 
-        var connectedPersonsList = connectedPersonsQuery.ToList();
+        var result = connectedPersons.ToList();
 
-        return connectedPersonsList;
+        return result;
     }
 }
