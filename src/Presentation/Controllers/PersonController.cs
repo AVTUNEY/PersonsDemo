@@ -58,13 +58,12 @@ public class PersonController : ControllerBase
         return CreatedAtAction(nameof(GetPersonById), new { personId = result.Id }, result);
     }
 
-    [HttpPut]
-    public async Task<IActionResult> UpdatePerson(int personId, [FromBody] UpdatePersonDto? personForUpdateDto,
+    [HttpPost("photo/{personId}")]
+    public async Task<IActionResult> UploadPhoto(int personId, [FromForm] UploadPersonPhoto photo,
         CancellationToken cancellationToken)
     {
-        await _serviceManager.PersonService.UpdateAsync(personId, personForUpdateDto, cancellationToken);
-
-        return NoContent();
+        await _serviceManager.PersonService.UploadPhoto(personId, photo, cancellationToken);
+        return Ok();
     }
 
     [HttpDelete("{personId}")]
@@ -75,11 +74,13 @@ public class PersonController : ControllerBase
         return NoContent();
     }
 
-    [HttpPost("photo/{personId}")]
-    public async Task<IActionResult> UploadPhoto(int personId, [FromForm] UploadPersonPhoto photo,
-        CancellationToken cancellationToken)
+    [HttpPut]
+    public async Task<IActionResult> UpdatePerson(int personId, [FromBody] UpdatePersonDto? personForUpdateDto,
+    CancellationToken cancellationToken)
     {
-        await _serviceManager.PersonService.UploadPhoto(personId, photo, cancellationToken);
-        return Ok();
+        await _serviceManager.PersonService.UpdateAsync(personId, personForUpdateDto, cancellationToken);
+
+        return NoContent();
     }
+
 }
