@@ -25,7 +25,7 @@ internal sealed class PersonService : IPersonService
         return createdPersonDto;
     }
 
-    public async Task UpdateAsync(int personId, PersonForUpdateDto updatedPersonDto,
+    public async Task UpdateAsync(int personId, PersonForUpdateDto? updatedPersonDto,
         CancellationToken cancellationToken = default)
     {
         var person = await _repositoryManager.PersonRepository.GetSingleByCondition(

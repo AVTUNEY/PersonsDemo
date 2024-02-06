@@ -37,4 +37,7 @@
     <data name="PersonalNumberDigitsNumberErrorMessage" xml:space="preserve">
         <value>პირადი ნომერი უნდა შეიცავდეს 11 ციფრს</value>
     </data>
+    <data name="InvalidDataTypeForDate" xml:space="preserve">
+        <value>გთხოვთ შეიყვანოთ სწორი მონაცემთა ტიპი.</value>
+    </data>
 </root>

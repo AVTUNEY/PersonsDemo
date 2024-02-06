@@ -3,7 +3,7 @@ namespace Shared.Validators;
 public class MinimumAgeAttribute : ValidationAttribute
 {
     private readonly int _minimumAge;
-    private readonly IStringLocalizer<SharedResource> _localizer;
+    private readonly IStringLocalizer<SharedResource> _stringLocaliser;
 
     public MinimumAgeAttribute(int minimumAge)
     {
@@ -11,12 +11,12 @@ public class MinimumAgeAttribute : ValidationAttribute
 
         var options = Options.Create(new LocalizationOptions());
         var factory = new ResourceManagerStringLocalizerFactory(options, NullLoggerFactory.Instance);
-        var localizer = new StringLocalizer<SharedResource>(factory);
+        var stringLocaliser = new StringLocalizer<SharedResource>(factory);
 
-        _localizer = localizer;
+        _stringLocaliser = stringLocaliser;
     }
 
-    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
         if (value is DateTime birthDate)
         {
@@ -26,11 +26,11 @@ public class MinimumAgeAttribute : ValidationAttribute
             }
             else
             {
-                var errorMessage = _localizer["AgeRestrictionErrorMessage"];
+                var errorMessage = _stringLocaliser["AgeRestrictionErrorMessage"];
                 return new ValidationResult(errorMessage);
             }
         }
 
-        return new ValidationResult("Invalid data type for the BirthDate property.");
+        return new ValidationResult(_stringLocaliser["InvalidDataTypeForDate"]);
     }
 }

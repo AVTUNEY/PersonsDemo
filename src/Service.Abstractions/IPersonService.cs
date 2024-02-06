@@ -7,7 +7,7 @@ public interface IPersonService
     Task<PhysicalPersonDto> CreateAsync(CreatePersonDto createPersonDto,
         CancellationToken cancellationToken = default);
 
-    Task UpdateAsync(int id, PersonForUpdateDto personForUpdateDto, CancellationToken cancellationToken = default);
+    Task UpdateAsync(int id, PersonForUpdateDto? personForUpdateDto, CancellationToken cancellationToken = default);
     Task DeleteAsync(int personId, CancellationToken cancellationToken = default);
     Task<PagedResult<PhysicalPersonDto>> SearchAndPaginate(string searchTerm, int pageNumber, int pageSize);
 

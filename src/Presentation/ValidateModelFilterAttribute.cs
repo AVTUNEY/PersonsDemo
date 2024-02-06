@@ -1,5 +1,16 @@
 namespace Presentation;
 
+public class ValidateModelAttribute : ActionFilterAttribute
+{
+    public override void OnActionExecuting(ActionExecutingContext context)
+    {
+        if (!context.ModelState.IsValid)
+        {
+            context.Result = new ValidationFailedResult(context.ModelState);
+        }
+    }
+}
+
 public class ValidationResultModel
 {
     public string Status { get; }
@@ -32,16 +43,5 @@ public class ValidationFailedResult : ObjectResult
         : base(new ValidationResultModel(modelState))
     {
         StatusCode = StatusCodes.Status400BadRequest;
-    }
-}
-
-public class ValidateModelAttribute : ActionFilterAttribute
-{
-    public override void OnActionExecuting(ActionExecutingContext context)
-    {
-        if (!context.ModelState.IsValid)
-        {
-            context.Result = new ValidationFailedResult(context.ModelState);
-        }
     }
 }

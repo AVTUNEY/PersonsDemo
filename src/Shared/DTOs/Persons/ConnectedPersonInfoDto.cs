@@ -11,5 +11,5 @@ public class ConnectedPersonsResult
 {
     public int Count { get; set; }
     public string ConnectionType { get; set; } = null!;
-    public List<ConnectedPersonInfoDto> ConnectedPersons { get; set; }
+    public List<ConnectedPersonInfoDto> ConnectedPersons { get; set; } = new List<ConnectedPersonInfoDto>();
 }

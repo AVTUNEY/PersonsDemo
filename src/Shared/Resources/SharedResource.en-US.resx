@@ -37,4 +37,7 @@
     <data name="PersonalNumberDigitsNumberErrorMessage" xml:space="preserve">
         <value>Personal Number should contain 11 digit</value>
     </data>
+    <data name="InvalidDataTypeForDate" xml:space="preserve">
+        <value>Invalid data type for the BirthDate property.</value>
+    </data>
 </root>

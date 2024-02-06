@@ -59,7 +59,7 @@ public class PersonController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdatePerson(int personId, [FromBody] PersonForUpdateDto personForUpdateDto,
+    public async Task<IActionResult> UpdatePerson(int personId, [FromBody] PersonForUpdateDto? personForUpdateDto,
         CancellationToken cancellationToken)
     {
         await _serviceManager.PersonService.UpdateAsync(personId, personForUpdateDto, cancellationToken);
