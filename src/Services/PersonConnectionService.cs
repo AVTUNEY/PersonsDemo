@@ -1,6 +1,6 @@
 namespace Services;
 
-public class PersonConnectionService : IPersonConnectionService
+internal sealed class PersonConnectionService : IPersonConnectionService
 {
     private readonly IRepositoryManager _repositoryManager;
 

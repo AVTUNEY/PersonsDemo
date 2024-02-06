@@ -1,0 +1,14 @@
+global using NUnit.Framework;
+global using Domain.Entities;
+global using Domain.Entities.Enums;
+global using Microsoft.EntityFrameworkCore;
+global using Persistence;
+global using Persistence.Repositories;
+global using System.Linq.Expressions;
+global using Domain.Repositories;
+global using Microsoft.Extensions.Hosting;
+global using Moq;
+global using Services;
+global using Shared.DTOs.Persons;
+global using Domain.Entities;
+global using Domain.Entities.Enums;
