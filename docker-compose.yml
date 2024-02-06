@@ -23,7 +23,7 @@ services:
     image: ${DOCKER_REGISTRY-}tbcdemowebapi
     build:
       context: .
-      dockerfile: src/TBCDemo.WebApi/Dockerfile
+      dockerfile: src/WebApi/Dockerfile
     networks:
       - backend
     environment:
@@ -41,32 +41,3 @@ services:
     ports:
       - "443:443"
       - "80:80"
-#services:
-#  backend:
-#    image: tbc-demo-webapi:latest  # Use the correct image name
-#    container_name: products.api
-#    build:
-#      context: .
-#      dockerfile: src/TBCDemo.WebApi/Dockerfile
-#    ports:
-#      - "443:443"
-#      - "80:80"
-#    environment:
-#      - ASPNETCORE_ENVIRONMENT=Development
-#      - ASPNETCORE_HTTP_PORTS=80
-#      - ASPNETCORE_HTTPS_PORTS=443
-#      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
-#      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
-#    volumes:
-#        - ~/.aspnet/https:/https:ro
-#    depends_on:
-#      - tbc-demo-database  # Update to the correct service name
-#
-#  tbc-demo-database:
-#    image: mcr.microsoft.com/mssql/server:2017-latest
-#    environment:
-#      - SA_USER=sa
-#      - SA_PASSWORD=Pass@word
-#      - ACCEPT_EULA=Y
-#    ports:
-#      - "1433:1433"

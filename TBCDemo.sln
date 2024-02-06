@@ -5,7 +5,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBCDemo.WebApi", "src\TBCDemo.WebApi\TBCDemo.WebApi.csproj", "{F25E2206-DD5A-441E-B43B-EA5336C81C36}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "src\WebApi\WebApi.csproj", "{F25E2206-DD5A-441E-B43B-EA5336C81C36}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "src\Core", "{AFEE1E04-2D93-4C13-BFE0-BA215EA787F3}"
 EndProject

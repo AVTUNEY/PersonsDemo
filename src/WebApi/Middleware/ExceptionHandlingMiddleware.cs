@@ -1,4 +1,4 @@
-namespace TBCDemo.WebApi.Middleware;
+namespace WebApi.Middleware;
 
 public class ExceptionHandlingMiddleware : IMiddleware
 {

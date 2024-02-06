@@ -1,4 +1,6 @@
-namespace TBCDemo.WebApi;
+using WebApi.Middleware;
+
+namespace WebApi;
 
 public static class ServiceCollectionExtensions
 {
